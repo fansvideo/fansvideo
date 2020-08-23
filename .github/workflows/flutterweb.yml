@@ -3,8 +3,6 @@ name: Dart Web CI
 on:
   push:
     branches: [ web-ci ]
-    tags:
-      - '*'
 
 jobs:
   build:
