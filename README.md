@@ -1,6 +1,4 @@
-![Dart Web CI](https://github.com/fansvideo/fansvideo/workflows/Dart%20Web%20CI/badge.svg)
-
-![Android CI](https://github.com/fansvideo/fansvideo/workflows/Android%20CI/badge.svg)
+![Dart Web CI](https://github.com/fansvideo/fansvideo/workflows/Dart%20Web%20CI/badge.svg) ![Android CI](https://github.com/fansvideo/fansvideo/workflows/Android%20CI/badge.svg)
 
 # fansvideo
 
