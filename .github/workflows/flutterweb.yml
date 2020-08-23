@@ -27,5 +27,6 @@ jobs:
         git status
         git remote add origin https://${{ secrets.ANDROID_CI_KEY }}@github.com/fansvideo/fansvideo.git
         git checkout -b gh-pages
+        git add .
         git commit -m 'update pages'
         git push origin gh-pages -f
