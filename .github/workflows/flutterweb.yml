@@ -1,4 +1,4 @@
-name: Dart Web CI
+name: Dart Web CI/CD
 
 on:
   push:
@@ -6,6 +6,9 @@ on:
 
 jobs:
   build:
+    name: Build Web
+    evn:
+      my_secret: ${{ secrets.ANDROID_CI_KEY }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -15,4 +18,14 @@ jobs:
     - run: flutter config --enable-web
     - run: flutter pub get
     - run: flutter test
-    - run: flutter build web
+    - run: flutter build web --release
+    -run: |
+      cd build/web
+      git init
+      git config --global user.email fanzheyuan@zheyuan.fun
+      git config --global user.name fanzheyuan
+      git status
+      git remote add origin https://${{ secrets.ANDROID_CI_KEY }}@github.com/fansvideo/fansvideo.git
+      git checkout -b gh-pages
+      git commit -m 'update pages'
+      git push origin gh-pages -f
