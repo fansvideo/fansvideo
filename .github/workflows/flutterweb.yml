@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Build Web
-    evn:
+    env:
       my_secret: ${{ secrets.ANDROID_CI_KEY }}
     runs-on: ubuntu-latest
     steps:
