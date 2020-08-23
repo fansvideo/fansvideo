@@ -2,7 +2,8 @@ name: Android CI
 
 on:
   push:
-    branches: [ android-ci ]
+    tags:
+      - '*'
 
 jobs:
   build:
