@@ -1,6 +1,6 @@
+import 'package:fansvideo/screens/widgets/right_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -33,86 +33,25 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             child: buildTab(),
           ),
+          RightMenu(),
           Positioned(
-            top: 200,
-            right: 0,
+            left: 20,
             bottom: 70,
-            child: Container(
-              width: 70,
-              height: size.height,
-              decoration: BoxDecoration(
-//                color: Colors.red.withOpacity(.7),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Stack(
-                    alignment: AlignmentDirectional.bottomCenter,
-                    overflow: Overflow.visible,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 2),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Image.asset(
-                            'assets/images/bg.png',
-                            width: 50,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -10,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.pinkAccent,
-                            ),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    CupertinoIcons.heart_solid,
-                    color: Colors.pink,
-                    size: 40,
-                  ),
-
-                  Icon(
-                    CupertinoIcons.person_solid,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-
-                  Icon(
-                    CupertinoIcons.share_up,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueGrey, width: 3),
-                      borderRadius: BorderRadius.circular(28),
-                    ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.cyanAccent,
-                      radius: 25,
-                      backgroundImage: AssetImage("assets/images/2.jpg"),
-                    ),
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('@用户 01'),
+                SizedBox(height: 4,),
+                Text('江南又下雨，你们那里下雨了吗？'),
+                SizedBox(height: 4,),
+                Row(
+                  children: [
+                    Icon(Icons.music_note, color: Colors.white, size: 16,),
+                    SizedBox(width: 4,),
+                    Text('你莫走(DJ版)-山水组合'),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
