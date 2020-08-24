@@ -100,6 +100,7 @@ class _FansVideoAppState extends State<FansVideoApp> {
                 left: 0,
                 right: 0,
                 child: BottomNavigationBar(
+
                   type: BottomNavigationBarType.fixed,
                   iconSize: 32,
                   fixedColor: Colors.white,

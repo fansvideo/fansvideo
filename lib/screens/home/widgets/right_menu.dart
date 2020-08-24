@@ -1,22 +1,22 @@
-
+import 'package:fansvideo/widgets/icon_with_text.dart';
+import 'package:fansvideo/widgets/image_with_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RightMenu extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Positioned(
       top: 200,
       right: 0,
-      bottom: 45,
+      bottom: 55,
       child: Container(
         width: 70,
         height: size.height,
         decoration: BoxDecoration(
 //                color: Colors.red.withOpacity(.7),
-        ),
+            ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,7 +33,7 @@ class RightMenu extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: Image.asset(
-                      'assets/images/bg.png',
+                      'assets/icons/profile.png',
                       width: 50,
                       fit: BoxFit.cover,
                     ),
@@ -57,46 +57,31 @@ class RightMenu extends StatelessWidget {
                 ),
               ],
             ),
-            Column(
-              children: [
-                Icon(
-                  CupertinoIcons.heart_solid,
-                  color: Colors.pink,
-                  size: 40,
-                ),
-                Text('3.2K'),
-              ],
+            IconWithText(
+              iconData: CupertinoIcons.heart,
+              text: '3.2K',
+//              color: Colors.pink,
             ),
-
-            Column(
-              children: [
-                Icon(
-                  CupertinoIcons.person_solid,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                Text('3.2K'),
-              ],
+            ImageWithText(
+              image: AssetImage('assets/icons/student_icon.png'),
+              text: '32K',
             ),
-
-            Column(
-              children: [
-                Icon(
-                  CupertinoIcons.share_up,
-                  color: Colors.white,
-                  size: 40,
-                ),
-                Text('分享'),
-              ],
+//            IconWithText(
+//              iconData: CupertinoIcons.person_solid,
+//              text: '3.2K',
+//            ),
+            IconWithText(
+              iconData: CupertinoIcons.share_up,
+              text: '分享',
             ),
             Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black87.withAlpha(95), width: 8),
-                borderRadius: BorderRadius.circular(28),
-              ),
-              child: CircleAvatar(
-                radius: 15,
-                backgroundImage: AssetImage("assets/images/2.jpg"),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: Image.asset(
+                  'assets/icons/album.png',
+                  width: 50,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ],
