@@ -33,7 +33,7 @@ class RightMenu extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(25),
                     child: Image.asset(
-                      'assets/icons/profile.png',
+                      'assets/icons/fan.png',
                       width: 50,
                       fit: BoxFit.cover,
                     ),

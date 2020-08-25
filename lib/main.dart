@@ -1,3 +1,4 @@
+import 'package:fansvideo/screens/popular_screen/PopularScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,7 @@ class FansVideoApp extends StatefulWidget {
   // This widget is the root of your application.
   final screens = [
     HomeScreen(),
-    SearchScreen(),
+    PopularScreen(),
     Scaffold(
       body: Center(
           child: Text(
@@ -44,7 +45,7 @@ class _FansVideoAppState extends State<FansVideoApp> {
   int _selectedIndex;
   final List<IconData> navs = [
     Icons.home,
-    Icons.search,
+    CupertinoIcons.collections,
     Icons.add_box,
     Icons.message,
     Icons.person,
@@ -64,7 +65,7 @@ class _FansVideoAppState extends State<FansVideoApp> {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.pinkAccent,
+        scaffoldBackgroundColor: Colors.black87,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: Theme.of(context)
             .textTheme
@@ -100,7 +101,6 @@ class _FansVideoAppState extends State<FansVideoApp> {
                 left: 0,
                 right: 0,
                 child: BottomNavigationBar(
-
                   type: BottomNavigationBarType.fixed,
                   iconSize: 32,
                   fixedColor: Colors.white,
