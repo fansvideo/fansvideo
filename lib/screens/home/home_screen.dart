@@ -10,7 +10,8 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   double _selectTab;
   VideoPlayerController _videoPlayerController;
   bool _isPlaying = true;
@@ -19,12 +20,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _selectTab = 1;
-    _videoPlayerController = VideoPlayerController.asset('assets/videos/Video2.mp4')
-      ..initialize()
-      ..setLooping(true)
-      ..play().then((value) {
-        setState(() {});
-      });
+    _videoPlayerController =
+        VideoPlayerController.asset('assets/videos/Video2.mp4')
+          ..initialize()
+          ..setLooping(true)
+          ..play().then((value) {
+            setState(() {});
+          });
   }
 
   @override
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         itemBuilder: (context, index) {
           Video _video = FakeRepository.videos[index];
           return Stack(
+            key: ValueKey<String>(_video.id),
             children: [
               Container(
                 width: double.infinity,
@@ -57,21 +60,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 ),
                 child: _videoPlayerController.value.initialized
                     ? Container(
-                  child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          if (_videoPlayerController
-                              .value.isPlaying) {
-                            _isPlaying = false;
-                            _videoPlayerController.pause();
-                          } else {
-                            _isPlaying = true;
-                            _videoPlayerController.play();
-                          }
-                        });
-                      },
-                      child: VideoPlayer(_videoPlayerController)),
-                )
+                        child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (_videoPlayerController.value.isPlaying) {
+                                  _isPlaying = false;
+                                  _videoPlayerController.pause();
+                                } else {
+                                  _isPlaying = true;
+                                  _videoPlayerController.play();
+                                }
+                              });
+                            },
+                            child: VideoPlayer(_videoPlayerController)),
+                      )
                     : Container(),
               ),
               Positioned(
