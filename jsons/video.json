@@ -1,0 +1,13 @@
+{
+  "id": 4,
+  "title": "Video 3",
+  "url": "https://fansvideo.github.io/fansvideo/assets/assets/videos/Video3.mp4",
+  "likes": 3223,
+  "song_name": "Song 3 - Artist 3",
+  "students": 143,
+  "user": {
+    "name": "Fan",
+    "profile": "https://fansvideo.github.io/fansvideo/assets/assets/icons/fan.png"
+  },
+  "uuid": "5d1fdde5-81f0-4511-9ce0-b095b42c8f37"
+}

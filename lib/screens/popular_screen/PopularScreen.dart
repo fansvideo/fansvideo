@@ -1,9 +1,10 @@
-import 'package:fansvideo/models/video.dart';
-import 'package:fansvideo/repository/fake_repository.dart';
+import 'package:fansvideo/graphql/graphql_api.dart';
 import 'package:fansvideo/screens/home/widgets/home_widgets.dart';
 import 'package:fansvideo/screens/video_demo/video_demo.dart';
+import 'package:fansvideo/widgets/blurhash_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class PopularScreen extends StatefulWidget {
   @override
@@ -33,33 +34,56 @@ class _PopularScreenState extends State<PopularScreen>
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: PageView.builder(
-        controller: PageController(
-          initialPage: 0,
+      body: Query(
+        options: QueryOptions(
+          documentNode: VideosDataQuery().document,
         ),
-        scrollDirection: Axis.vertical,
-        itemCount: FakeRepository.videos.length,
-        itemBuilder: (context, index) {
+        builder: (
+            QueryResult result, {
+              Future<QueryResult> Function() refetch,
+              FetchMore fetchMore,
+            }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+          if (result.loading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final allVideos =
+              VideosData$query_root.fromJson(result.data).videos;
+          return PageView.builder(
+            controller: PageController(
+              initialPage: 0,
+            ),
+            scrollDirection: Axis.vertical,
+            itemCount: allVideos.length,
+            itemBuilder: (context, index) {
 //          return VideoDemo(videoUrl: 'assets/videos/Video${index + 1}.mp4');
-          Video _video = FakeRepository.videos[index];
-          return Stack(
-            children: [
-              Container(
-                  width: double.infinity,
-                  height: size.height,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/2.jpg'),
-                        fit: BoxFit.cover),
+              final video = allVideos[index];
+              return Stack(
+                key: Key(video.uuid),
+                children: [
+                  FansBlurHashImage(hash: "LKO2?U%2Tw=w]~RBVZRi};RPxuwH",),
+                  Container(
+                      width: double.infinity,
+                      height: size.height,
+//                  decoration: BoxDecoration(
+//                    image: DecorationImage(
+//                        image: AssetImage('assets/images/2.jpg'),
+//                        fit: BoxFit.cover),
+//                  ),
+                      child: VideoDemo(videoUrl: video.url)
                   ),
-                  child: VideoDemo(videoUrl: 'assets/videos/Video${index + 1}.mp4')
-              ),
-              Positioned(
-                child: buildTab(),
-              ),
-              RightMenu(),
-              VideoDescription(),
-            ],
+                  Positioned(
+                    child: buildTab(),
+                  ),
+                  RightMenu(),
+                  VideoDescription(),
+                ],
+              );
+            },
           );
         },
       ),

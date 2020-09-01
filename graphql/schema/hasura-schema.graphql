@@ -1,0 +1,5150 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+# columns and relationships of "article"
+type article {
+  # An array relationship
+  article_tags(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): [article_tag!]!
+
+  # An aggregated array relationship
+  article_tags_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): article_tag_aggregate!
+
+  # An object relationship
+  author: author!
+  author_id: Int!
+  content: String!
+  id: Int!
+  rating: Int!
+
+  # An array relationship
+  tags(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): [article_tags_view!]!
+
+  # An aggregated array relationship
+  tags_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): article_tags_view_aggregate!
+  title: String!
+  user_id: String
+}
+
+# aggregated selection of "article"
+type article_aggregate {
+  aggregate: article_aggregate_fields
+  nodes: [article!]!
+}
+
+# aggregate fields of "article"
+type article_aggregate_fields {
+  avg: article_avg_fields
+  count(columns: [article_select_column!], distinct: Boolean): Int
+  max: article_max_fields
+  min: article_min_fields
+  stddev: article_stddev_fields
+  stddev_pop: article_stddev_pop_fields
+  stddev_samp: article_stddev_samp_fields
+  sum: article_sum_fields
+  var_pop: article_var_pop_fields
+  var_samp: article_var_samp_fields
+  variance: article_variance_fields
+}
+
+# order by aggregate values of table "article"
+input article_aggregate_order_by {
+  avg: article_avg_order_by
+  count: order_by
+  max: article_max_order_by
+  min: article_min_order_by
+  stddev: article_stddev_order_by
+  stddev_pop: article_stddev_pop_order_by
+  stddev_samp: article_stddev_samp_order_by
+  sum: article_sum_order_by
+  var_pop: article_var_pop_order_by
+  var_samp: article_var_samp_order_by
+  variance: article_variance_order_by
+}
+
+# input type for inserting array relation for remote table "article"
+input article_arr_rel_insert_input {
+  data: [article_insert_input!]!
+  on_conflict: article_on_conflict
+}
+
+# aggregate avg on columns
+type article_avg_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by avg() on columns of table "article"
+input article_avg_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# Boolean expression to filter rows from the table "article". All fields are combined with a logical 'AND'.
+input article_bool_exp {
+  _and: [article_bool_exp]
+  _not: article_bool_exp
+  _or: [article_bool_exp]
+  article_tags: article_tag_bool_exp
+  author: author_bool_exp
+  author_id: Int_comparison_exp
+  content: String_comparison_exp
+  id: Int_comparison_exp
+  rating: Int_comparison_exp
+  tags: article_tags_view_bool_exp
+  title: String_comparison_exp
+  user_id: String_comparison_exp
+}
+
+# unique or primary key constraints on table "article"
+enum article_constraint {
+  # unique or primary key constraint
+  article_pkey
+}
+
+# input type for incrementing integer column in table "article"
+input article_inc_input {
+  author_id: Int
+  id: Int
+  rating: Int
+}
+
+# input type for inserting data into table "article"
+input article_insert_input {
+  article_tags: article_tag_arr_rel_insert_input
+  author: author_obj_rel_insert_input
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  title: String
+  user_id: String
+}
+
+# aggregate max on columns
+type article_max_fields {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  title: String
+  user_id: String
+}
+
+# order by max() on columns of table "article"
+input article_max_order_by {
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  title: order_by
+  user_id: order_by
+}
+
+# aggregate min on columns
+type article_min_fields {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  title: String
+  user_id: String
+}
+
+# order by min() on columns of table "article"
+input article_min_order_by {
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  title: order_by
+  user_id: order_by
+}
+
+# response of any mutation on the table "article"
+type article_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [article!]!
+}
+
+# input type for inserting object relation for remote table "article"
+input article_obj_rel_insert_input {
+  data: article_insert_input!
+  on_conflict: article_on_conflict
+}
+
+# on conflict condition type for table "article"
+input article_on_conflict {
+  constraint: article_constraint!
+  update_columns: [article_update_column!]!
+  where: article_bool_exp
+}
+
+# ordering options when selecting data from "article"
+input article_order_by {
+  article_tags_aggregate: article_tag_aggregate_order_by
+  author: author_order_by
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  tags_aggregate: article_tags_view_aggregate_order_by
+  title: order_by
+  user_id: order_by
+}
+
+# primary key columns input for table: "article"
+input article_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "article"
+enum article_select_column {
+  # column name
+  author_id
+
+  # column name
+  content
+
+  # column name
+  id
+
+  # column name
+  rating
+
+  # column name
+  title
+
+  # column name
+  user_id
+}
+
+# input type for updating data in table "article"
+input article_set_input {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  title: String
+  user_id: String
+}
+
+# aggregate stddev on columns
+type article_stddev_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by stddev() on columns of table "article"
+input article_stddev_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# aggregate stddev_pop on columns
+type article_stddev_pop_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by stddev_pop() on columns of table "article"
+input article_stddev_pop_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# aggregate stddev_samp on columns
+type article_stddev_samp_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by stddev_samp() on columns of table "article"
+input article_stddev_samp_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# aggregate sum on columns
+type article_sum_fields {
+  author_id: Int
+  id: Int
+  rating: Int
+}
+
+# order by sum() on columns of table "article"
+input article_sum_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# columns and relationships of "article_tag"
+type article_tag {
+  # An object relationship
+  article: article!
+  article_id: Int!
+
+  # An object relationship
+  tag: tag!
+  tag_id: Int!
+}
+
+# aggregated selection of "article_tag"
+type article_tag_aggregate {
+  aggregate: article_tag_aggregate_fields
+  nodes: [article_tag!]!
+}
+
+# aggregate fields of "article_tag"
+type article_tag_aggregate_fields {
+  avg: article_tag_avg_fields
+  count(columns: [article_tag_select_column!], distinct: Boolean): Int
+  max: article_tag_max_fields
+  min: article_tag_min_fields
+  stddev: article_tag_stddev_fields
+  stddev_pop: article_tag_stddev_pop_fields
+  stddev_samp: article_tag_stddev_samp_fields
+  sum: article_tag_sum_fields
+  var_pop: article_tag_var_pop_fields
+  var_samp: article_tag_var_samp_fields
+  variance: article_tag_variance_fields
+}
+
+# order by aggregate values of table "article_tag"
+input article_tag_aggregate_order_by {
+  avg: article_tag_avg_order_by
+  count: order_by
+  max: article_tag_max_order_by
+  min: article_tag_min_order_by
+  stddev: article_tag_stddev_order_by
+  stddev_pop: article_tag_stddev_pop_order_by
+  stddev_samp: article_tag_stddev_samp_order_by
+  sum: article_tag_sum_order_by
+  var_pop: article_tag_var_pop_order_by
+  var_samp: article_tag_var_samp_order_by
+  variance: article_tag_variance_order_by
+}
+
+# input type for inserting array relation for remote table "article_tag"
+input article_tag_arr_rel_insert_input {
+  data: [article_tag_insert_input!]!
+  on_conflict: article_tag_on_conflict
+}
+
+# aggregate avg on columns
+type article_tag_avg_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by avg() on columns of table "article_tag"
+input article_tag_avg_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# Boolean expression to filter rows from the table "article_tag". All fields are combined with a logical 'AND'.
+input article_tag_bool_exp {
+  _and: [article_tag_bool_exp]
+  _not: article_tag_bool_exp
+  _or: [article_tag_bool_exp]
+  article: article_bool_exp
+  article_id: Int_comparison_exp
+  tag: tag_bool_exp
+  tag_id: Int_comparison_exp
+}
+
+# unique or primary key constraints on table "article_tag"
+enum article_tag_constraint {
+  # unique or primary key constraint
+  article_tag_pkey
+}
+
+# input type for incrementing integer column in table "article_tag"
+input article_tag_inc_input {
+  article_id: Int
+  tag_id: Int
+}
+
+# input type for inserting data into table "article_tag"
+input article_tag_insert_input {
+  article: article_obj_rel_insert_input
+  article_id: Int
+  tag: tag_obj_rel_insert_input
+  tag_id: Int
+}
+
+# aggregate max on columns
+type article_tag_max_fields {
+  article_id: Int
+  tag_id: Int
+}
+
+# order by max() on columns of table "article_tag"
+input article_tag_max_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate min on columns
+type article_tag_min_fields {
+  article_id: Int
+  tag_id: Int
+}
+
+# order by min() on columns of table "article_tag"
+input article_tag_min_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# response of any mutation on the table "article_tag"
+type article_tag_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [article_tag!]!
+}
+
+# input type for inserting object relation for remote table "article_tag"
+input article_tag_obj_rel_insert_input {
+  data: article_tag_insert_input!
+  on_conflict: article_tag_on_conflict
+}
+
+# on conflict condition type for table "article_tag"
+input article_tag_on_conflict {
+  constraint: article_tag_constraint!
+  update_columns: [article_tag_update_column!]!
+  where: article_tag_bool_exp
+}
+
+# ordering options when selecting data from "article_tag"
+input article_tag_order_by {
+  article: article_order_by
+  article_id: order_by
+  tag: tag_order_by
+  tag_id: order_by
+}
+
+# primary key columns input for table: "article_tag"
+input article_tag_pk_columns_input {
+  article_id: Int!
+  tag_id: Int!
+}
+
+# select columns of table "article_tag"
+enum article_tag_select_column {
+  # column name
+  article_id
+
+  # column name
+  tag_id
+}
+
+# input type for updating data in table "article_tag"
+input article_tag_set_input {
+  article_id: Int
+  tag_id: Int
+}
+
+# aggregate stddev on columns
+type article_tag_stddev_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by stddev() on columns of table "article_tag"
+input article_tag_stddev_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate stddev_pop on columns
+type article_tag_stddev_pop_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by stddev_pop() on columns of table "article_tag"
+input article_tag_stddev_pop_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate stddev_samp on columns
+type article_tag_stddev_samp_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by stddev_samp() on columns of table "article_tag"
+input article_tag_stddev_samp_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate sum on columns
+type article_tag_sum_fields {
+  article_id: Int
+  tag_id: Int
+}
+
+# order by sum() on columns of table "article_tag"
+input article_tag_sum_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# update columns of table "article_tag"
+enum article_tag_update_column {
+  # column name
+  article_id
+
+  # column name
+  tag_id
+}
+
+# aggregate var_pop on columns
+type article_tag_var_pop_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by var_pop() on columns of table "article_tag"
+input article_tag_var_pop_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate var_samp on columns
+type article_tag_var_samp_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by var_samp() on columns of table "article_tag"
+input article_tag_var_samp_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# aggregate variance on columns
+type article_tag_variance_fields {
+  article_id: Float
+  tag_id: Float
+}
+
+# order by variance() on columns of table "article_tag"
+input article_tag_variance_order_by {
+  article_id: order_by
+  tag_id: order_by
+}
+
+# columns and relationships of "article_tags_view"
+type article_tags_view {
+  article_id: Int
+  id: Int
+  tag_value: String
+}
+
+# aggregated selection of "article_tags_view"
+type article_tags_view_aggregate {
+  aggregate: article_tags_view_aggregate_fields
+  nodes: [article_tags_view!]!
+}
+
+# aggregate fields of "article_tags_view"
+type article_tags_view_aggregate_fields {
+  avg: article_tags_view_avg_fields
+  count(columns: [article_tags_view_select_column!], distinct: Boolean): Int
+  max: article_tags_view_max_fields
+  min: article_tags_view_min_fields
+  stddev: article_tags_view_stddev_fields
+  stddev_pop: article_tags_view_stddev_pop_fields
+  stddev_samp: article_tags_view_stddev_samp_fields
+  sum: article_tags_view_sum_fields
+  var_pop: article_tags_view_var_pop_fields
+  var_samp: article_tags_view_var_samp_fields
+  variance: article_tags_view_variance_fields
+}
+
+# order by aggregate values of table "article_tags_view"
+input article_tags_view_aggregate_order_by {
+  avg: article_tags_view_avg_order_by
+  count: order_by
+  max: article_tags_view_max_order_by
+  min: article_tags_view_min_order_by
+  stddev: article_tags_view_stddev_order_by
+  stddev_pop: article_tags_view_stddev_pop_order_by
+  stddev_samp: article_tags_view_stddev_samp_order_by
+  sum: article_tags_view_sum_order_by
+  var_pop: article_tags_view_var_pop_order_by
+  var_samp: article_tags_view_var_samp_order_by
+  variance: article_tags_view_variance_order_by
+}
+
+# aggregate avg on columns
+type article_tags_view_avg_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by avg() on columns of table "article_tags_view"
+input article_tags_view_avg_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# Boolean expression to filter rows from the table "article_tags_view". All fields are combined with a logical 'AND'.
+input article_tags_view_bool_exp {
+  _and: [article_tags_view_bool_exp]
+  _not: article_tags_view_bool_exp
+  _or: [article_tags_view_bool_exp]
+  article_id: Int_comparison_exp
+  id: Int_comparison_exp
+  tag_value: String_comparison_exp
+}
+
+# aggregate max on columns
+type article_tags_view_max_fields {
+  article_id: Int
+  id: Int
+  tag_value: String
+}
+
+# order by max() on columns of table "article_tags_view"
+input article_tags_view_max_order_by {
+  article_id: order_by
+  id: order_by
+  tag_value: order_by
+}
+
+# aggregate min on columns
+type article_tags_view_min_fields {
+  article_id: Int
+  id: Int
+  tag_value: String
+}
+
+# order by min() on columns of table "article_tags_view"
+input article_tags_view_min_order_by {
+  article_id: order_by
+  id: order_by
+  tag_value: order_by
+}
+
+# ordering options when selecting data from "article_tags_view"
+input article_tags_view_order_by {
+  article_id: order_by
+  id: order_by
+  tag_value: order_by
+}
+
+# select columns of table "article_tags_view"
+enum article_tags_view_select_column {
+  # column name
+  article_id
+
+  # column name
+  id
+
+  # column name
+  tag_value
+}
+
+# aggregate stddev on columns
+type article_tags_view_stddev_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by stddev() on columns of table "article_tags_view"
+input article_tags_view_stddev_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate stddev_pop on columns
+type article_tags_view_stddev_pop_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by stddev_pop() on columns of table "article_tags_view"
+input article_tags_view_stddev_pop_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate stddev_samp on columns
+type article_tags_view_stddev_samp_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by stddev_samp() on columns of table "article_tags_view"
+input article_tags_view_stddev_samp_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate sum on columns
+type article_tags_view_sum_fields {
+  article_id: Int
+  id: Int
+}
+
+# order by sum() on columns of table "article_tags_view"
+input article_tags_view_sum_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate var_pop on columns
+type article_tags_view_var_pop_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by var_pop() on columns of table "article_tags_view"
+input article_tags_view_var_pop_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate var_samp on columns
+type article_tags_view_var_samp_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by var_samp() on columns of table "article_tags_view"
+input article_tags_view_var_samp_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# aggregate variance on columns
+type article_tags_view_variance_fields {
+  article_id: Float
+  id: Float
+}
+
+# order by variance() on columns of table "article_tags_view"
+input article_tags_view_variance_order_by {
+  article_id: order_by
+  id: order_by
+}
+
+# update columns of table "article"
+enum article_update_column {
+  # column name
+  author_id
+
+  # column name
+  content
+
+  # column name
+  id
+
+  # column name
+  rating
+
+  # column name
+  title
+
+  # column name
+  user_id
+}
+
+# aggregate var_pop on columns
+type article_var_pop_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by var_pop() on columns of table "article"
+input article_var_pop_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# aggregate var_samp on columns
+type article_var_samp_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by var_samp() on columns of table "article"
+input article_var_samp_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# aggregate variance on columns
+type article_variance_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+}
+
+# order by variance() on columns of table "article"
+input article_variance_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+}
+
+# columns and relationships of "author"
+type author {
+  # An array relationship
+  articles(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): [article!]!
+
+  # An aggregated array relationship
+  articles_aggregate(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): article_aggregate!
+
+  # An object relationship
+  avg_rating: author_average_rating
+  id: Int!
+  name: String!
+
+  # An object relationship
+  passport_info: passport_info
+}
+
+# aggregated selection of "author"
+type author_aggregate {
+  aggregate: author_aggregate_fields
+  nodes: [author!]!
+}
+
+# aggregate fields of "author"
+type author_aggregate_fields {
+  avg: author_avg_fields
+  count(columns: [author_select_column!], distinct: Boolean): Int
+  max: author_max_fields
+  min: author_min_fields
+  stddev: author_stddev_fields
+  stddev_pop: author_stddev_pop_fields
+  stddev_samp: author_stddev_samp_fields
+  sum: author_sum_fields
+  var_pop: author_var_pop_fields
+  var_samp: author_var_samp_fields
+  variance: author_variance_fields
+}
+
+# order by aggregate values of table "author"
+input author_aggregate_order_by {
+  avg: author_avg_order_by
+  count: order_by
+  max: author_max_order_by
+  min: author_min_order_by
+  stddev: author_stddev_order_by
+  stddev_pop: author_stddev_pop_order_by
+  stddev_samp: author_stddev_samp_order_by
+  sum: author_sum_order_by
+  var_pop: author_var_pop_order_by
+  var_samp: author_var_samp_order_by
+  variance: author_variance_order_by
+}
+
+# input type for inserting array relation for remote table "author"
+input author_arr_rel_insert_input {
+  data: [author_insert_input!]!
+  on_conflict: author_on_conflict
+}
+
+# columns and relationships of "author_average_rating"
+type author_average_rating {
+  avg: numeric
+  id: Int!
+}
+
+# aggregated selection of "author_average_rating"
+type author_average_rating_aggregate {
+  aggregate: author_average_rating_aggregate_fields
+  nodes: [author_average_rating!]!
+}
+
+# aggregate fields of "author_average_rating"
+type author_average_rating_aggregate_fields {
+  avg: author_average_rating_avg_fields
+  count(columns: [author_average_rating_select_column!], distinct: Boolean): Int
+  max: author_average_rating_max_fields
+  min: author_average_rating_min_fields
+  stddev: author_average_rating_stddev_fields
+  stddev_pop: author_average_rating_stddev_pop_fields
+  stddev_samp: author_average_rating_stddev_samp_fields
+  sum: author_average_rating_sum_fields
+  var_pop: author_average_rating_var_pop_fields
+  var_samp: author_average_rating_var_samp_fields
+  variance: author_average_rating_variance_fields
+}
+
+# order by aggregate values of table "author_average_rating"
+input author_average_rating_aggregate_order_by {
+  avg: author_average_rating_avg_order_by
+  count: order_by
+  max: author_average_rating_max_order_by
+  min: author_average_rating_min_order_by
+  stddev: author_average_rating_stddev_order_by
+  stddev_pop: author_average_rating_stddev_pop_order_by
+  stddev_samp: author_average_rating_stddev_samp_order_by
+  sum: author_average_rating_sum_order_by
+  var_pop: author_average_rating_var_pop_order_by
+  var_samp: author_average_rating_var_samp_order_by
+  variance: author_average_rating_variance_order_by
+}
+
+# input type for inserting array relation for remote table "author_average_rating"
+input author_average_rating_arr_rel_insert_input {
+  data: [author_average_rating_insert_input!]!
+  on_conflict: author_average_rating_on_conflict
+}
+
+# aggregate avg on columns
+type author_average_rating_avg_fields {
+  avg: Float
+  id: Float
+}
+
+# order by avg() on columns of table "author_average_rating"
+input author_average_rating_avg_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# Boolean expression to filter rows from the table "author_average_rating". All fields are combined with a logical 'AND'.
+input author_average_rating_bool_exp {
+  _and: [author_average_rating_bool_exp]
+  _not: author_average_rating_bool_exp
+  _or: [author_average_rating_bool_exp]
+  avg: numeric_comparison_exp
+  id: Int_comparison_exp
+}
+
+# unique or primary key constraints on table "author_average_rating"
+enum author_average_rating_constraint {
+  # unique or primary key constraint
+  author_average_rating_pkey
+}
+
+# input type for incrementing integer column in table "author_average_rating"
+input author_average_rating_inc_input {
+  avg: numeric
+  id: Int
+}
+
+# input type for inserting data into table "author_average_rating"
+input author_average_rating_insert_input {
+  avg: numeric
+  id: Int
+}
+
+# aggregate max on columns
+type author_average_rating_max_fields {
+  avg: numeric
+  id: Int
+}
+
+# order by max() on columns of table "author_average_rating"
+input author_average_rating_max_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate min on columns
+type author_average_rating_min_fields {
+  avg: numeric
+  id: Int
+}
+
+# order by min() on columns of table "author_average_rating"
+input author_average_rating_min_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# response of any mutation on the table "author_average_rating"
+type author_average_rating_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [author_average_rating!]!
+}
+
+# input type for inserting object relation for remote table "author_average_rating"
+input author_average_rating_obj_rel_insert_input {
+  data: author_average_rating_insert_input!
+  on_conflict: author_average_rating_on_conflict
+}
+
+# on conflict condition type for table "author_average_rating"
+input author_average_rating_on_conflict {
+  constraint: author_average_rating_constraint!
+  update_columns: [author_average_rating_update_column!]!
+  where: author_average_rating_bool_exp
+}
+
+# ordering options when selecting data from "author_average_rating"
+input author_average_rating_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# primary key columns input for table: "author_average_rating"
+input author_average_rating_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "author_average_rating"
+enum author_average_rating_select_column {
+  # column name
+  avg
+
+  # column name
+  id
+}
+
+# input type for updating data in table "author_average_rating"
+input author_average_rating_set_input {
+  avg: numeric
+  id: Int
+}
+
+# aggregate stddev on columns
+type author_average_rating_stddev_fields {
+  avg: Float
+  id: Float
+}
+
+# order by stddev() on columns of table "author_average_rating"
+input author_average_rating_stddev_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate stddev_pop on columns
+type author_average_rating_stddev_pop_fields {
+  avg: Float
+  id: Float
+}
+
+# order by stddev_pop() on columns of table "author_average_rating"
+input author_average_rating_stddev_pop_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate stddev_samp on columns
+type author_average_rating_stddev_samp_fields {
+  avg: Float
+  id: Float
+}
+
+# order by stddev_samp() on columns of table "author_average_rating"
+input author_average_rating_stddev_samp_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate sum on columns
+type author_average_rating_sum_fields {
+  avg: numeric
+  id: Int
+}
+
+# order by sum() on columns of table "author_average_rating"
+input author_average_rating_sum_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# update columns of table "author_average_rating"
+enum author_average_rating_update_column {
+  # column name
+  avg
+
+  # column name
+  id
+}
+
+# aggregate var_pop on columns
+type author_average_rating_var_pop_fields {
+  avg: Float
+  id: Float
+}
+
+# order by var_pop() on columns of table "author_average_rating"
+input author_average_rating_var_pop_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate var_samp on columns
+type author_average_rating_var_samp_fields {
+  avg: Float
+  id: Float
+}
+
+# order by var_samp() on columns of table "author_average_rating"
+input author_average_rating_var_samp_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate variance on columns
+type author_average_rating_variance_fields {
+  avg: Float
+  id: Float
+}
+
+# order by variance() on columns of table "author_average_rating"
+input author_average_rating_variance_order_by {
+  avg: order_by
+  id: order_by
+}
+
+# aggregate avg on columns
+type author_avg_fields {
+  id: Float
+}
+
+# order by avg() on columns of table "author"
+input author_avg_order_by {
+  id: order_by
+}
+
+# Boolean expression to filter rows from the table "author". All fields are combined with a logical 'AND'.
+input author_bool_exp {
+  _and: [author_bool_exp]
+  _not: author_bool_exp
+  _or: [author_bool_exp]
+  articles: article_bool_exp
+  avg_rating: author_average_rating_bool_exp
+  id: Int_comparison_exp
+  name: String_comparison_exp
+  passport_info: passport_info_bool_exp
+}
+
+# unique or primary key constraints on table "author"
+enum author_constraint {
+  # unique or primary key constraint
+  author_pkey
+}
+
+# input type for incrementing integer column in table "author"
+input author_inc_input {
+  id: Int
+}
+
+# input type for inserting data into table "author"
+input author_insert_input {
+  articles: article_arr_rel_insert_input
+  avg_rating: author_average_rating_obj_rel_insert_input
+  id: Int
+  name: String
+  passport_info: passport_info_obj_rel_insert_input
+}
+
+# aggregate max on columns
+type author_max_fields {
+  id: Int
+  name: String
+}
+
+# order by max() on columns of table "author"
+input author_max_order_by {
+  id: order_by
+  name: order_by
+}
+
+# aggregate min on columns
+type author_min_fields {
+  id: Int
+  name: String
+}
+
+# order by min() on columns of table "author"
+input author_min_order_by {
+  id: order_by
+  name: order_by
+}
+
+# response of any mutation on the table "author"
+type author_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [author!]!
+}
+
+# input type for inserting object relation for remote table "author"
+input author_obj_rel_insert_input {
+  data: author_insert_input!
+  on_conflict: author_on_conflict
+}
+
+# on conflict condition type for table "author"
+input author_on_conflict {
+  constraint: author_constraint!
+  update_columns: [author_update_column!]!
+  where: author_bool_exp
+}
+
+# ordering options when selecting data from "author"
+input author_order_by {
+  articles_aggregate: article_aggregate_order_by
+  avg_rating: author_average_rating_order_by
+  id: order_by
+  name: order_by
+  passport_info: passport_info_order_by
+}
+
+# primary key columns input for table: "author"
+input author_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "author"
+enum author_select_column {
+  # column name
+  id
+
+  # column name
+  name
+}
+
+# input type for updating data in table "author"
+input author_set_input {
+  id: Int
+  name: String
+}
+
+# aggregate stddev on columns
+type author_stddev_fields {
+  id: Float
+}
+
+# order by stddev() on columns of table "author"
+input author_stddev_order_by {
+  id: order_by
+}
+
+# aggregate stddev_pop on columns
+type author_stddev_pop_fields {
+  id: Float
+}
+
+# order by stddev_pop() on columns of table "author"
+input author_stddev_pop_order_by {
+  id: order_by
+}
+
+# aggregate stddev_samp on columns
+type author_stddev_samp_fields {
+  id: Float
+}
+
+# order by stddev_samp() on columns of table "author"
+input author_stddev_samp_order_by {
+  id: order_by
+}
+
+# aggregate sum on columns
+type author_sum_fields {
+  id: Int
+}
+
+# order by sum() on columns of table "author"
+input author_sum_order_by {
+  id: order_by
+}
+
+# update columns of table "author"
+enum author_update_column {
+  # column name
+  id
+
+  # column name
+  name
+}
+
+# aggregate var_pop on columns
+type author_var_pop_fields {
+  id: Float
+}
+
+# order by var_pop() on columns of table "author"
+input author_var_pop_order_by {
+  id: order_by
+}
+
+# aggregate var_samp on columns
+type author_var_samp_fields {
+  id: Float
+}
+
+# order by var_samp() on columns of table "author"
+input author_var_samp_order_by {
+  id: order_by
+}
+
+# aggregate variance on columns
+type author_variance_fields {
+  id: Float
+}
+
+# order by variance() on columns of table "author"
+input author_variance_order_by {
+  id: order_by
+}
+
+# columns and relationships of "employees"
+type employees {
+  description: String
+
+  # An array relationship
+  employees(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): [employees!]!
+
+  # An aggregated array relationship
+  employees_aggregate(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): employees_aggregate!
+  id: uuid!
+
+  # An object relationship
+  manager: employees
+  manager_id: uuid
+  name: String!
+
+  # An object relationship
+  payroll: payrolls
+}
+
+# aggregated selection of "employees"
+type employees_aggregate {
+  aggregate: employees_aggregate_fields
+  nodes: [employees!]!
+}
+
+# aggregate fields of "employees"
+type employees_aggregate_fields {
+  count(columns: [employees_select_column!], distinct: Boolean): Int
+  max: employees_max_fields
+  min: employees_min_fields
+}
+
+# order by aggregate values of table "employees"
+input employees_aggregate_order_by {
+  count: order_by
+  max: employees_max_order_by
+  min: employees_min_order_by
+}
+
+# input type for inserting array relation for remote table "employees"
+input employees_arr_rel_insert_input {
+  data: [employees_insert_input!]!
+  on_conflict: employees_on_conflict
+}
+
+# Boolean expression to filter rows from the table "employees". All fields are combined with a logical 'AND'.
+input employees_bool_exp {
+  _and: [employees_bool_exp]
+  _not: employees_bool_exp
+  _or: [employees_bool_exp]
+  description: String_comparison_exp
+  employees: employees_bool_exp
+  id: uuid_comparison_exp
+  manager: employees_bool_exp
+  manager_id: uuid_comparison_exp
+  name: String_comparison_exp
+  payroll: payrolls_bool_exp
+}
+
+# unique or primary key constraints on table "employees"
+enum employees_constraint {
+  # unique or primary key constraint
+  employees_pkey
+}
+
+# input type for inserting data into table "employees"
+input employees_insert_input {
+  description: String
+  employees: employees_arr_rel_insert_input
+  id: uuid
+  manager: employees_obj_rel_insert_input
+  manager_id: uuid
+  name: String
+  payroll: payrolls_obj_rel_insert_input
+}
+
+# aggregate max on columns
+type employees_max_fields {
+  description: String
+  id: uuid
+  manager_id: uuid
+  name: String
+}
+
+# order by max() on columns of table "employees"
+input employees_max_order_by {
+  description: order_by
+  id: order_by
+  manager_id: order_by
+  name: order_by
+}
+
+# aggregate min on columns
+type employees_min_fields {
+  description: String
+  id: uuid
+  manager_id: uuid
+  name: String
+}
+
+# order by min() on columns of table "employees"
+input employees_min_order_by {
+  description: order_by
+  id: order_by
+  manager_id: order_by
+  name: order_by
+}
+
+# response of any mutation on the table "employees"
+type employees_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [employees!]!
+}
+
+# input type for inserting object relation for remote table "employees"
+input employees_obj_rel_insert_input {
+  data: employees_insert_input!
+  on_conflict: employees_on_conflict
+}
+
+# on conflict condition type for table "employees"
+input employees_on_conflict {
+  constraint: employees_constraint!
+  update_columns: [employees_update_column!]!
+  where: employees_bool_exp
+}
+
+# ordering options when selecting data from "employees"
+input employees_order_by {
+  description: order_by
+  employees_aggregate: employees_aggregate_order_by
+  id: order_by
+  manager: employees_order_by
+  manager_id: order_by
+  name: order_by
+  payroll: payrolls_order_by
+}
+
+# primary key columns input for table: "employees"
+input employees_pk_columns_input {
+  id: uuid!
+}
+
+# select columns of table "employees"
+enum employees_select_column {
+  # column name
+  description
+
+  # column name
+  id
+
+  # column name
+  manager_id
+
+  # column name
+  name
+}
+
+# input type for updating data in table "employees"
+input employees_set_input {
+  description: String
+  id: uuid
+  manager_id: uuid
+  name: String
+}
+
+# update columns of table "employees"
+enum employees_update_column {
+  # column name
+  description
+
+  # column name
+  id
+
+  # column name
+  manager_id
+
+  # column name
+  name
+}
+
+# expression to compare columns of type Int. All fields are combined with logical 'AND'.
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+# mutation root
+type mutation_root {
+  # delete data from the table: "article"
+  delete_article(
+    # filter the rows which have to be deleted
+    where: article_bool_exp!
+  ): article_mutation_response
+
+  # delete single row from the table: "article"
+  delete_article_by_pk(id: Int!): article
+
+  # delete data from the table: "article_tag"
+  delete_article_tag(
+    # filter the rows which have to be deleted
+    where: article_tag_bool_exp!
+  ): article_tag_mutation_response
+
+  # delete single row from the table: "article_tag"
+  delete_article_tag_by_pk(article_id: Int!, tag_id: Int!): article_tag
+
+  # delete data from the table: "author"
+  delete_author(
+    # filter the rows which have to be deleted
+    where: author_bool_exp!
+  ): author_mutation_response
+
+  # delete data from the table: "author_average_rating"
+  delete_author_average_rating(
+    # filter the rows which have to be deleted
+    where: author_average_rating_bool_exp!
+  ): author_average_rating_mutation_response
+
+  # delete single row from the table: "author_average_rating"
+  delete_author_average_rating_by_pk(id: Int!): author_average_rating
+
+  # delete single row from the table: "author"
+  delete_author_by_pk(id: Int!): author
+
+  # delete data from the table: "employees"
+  delete_employees(
+    # filter the rows which have to be deleted
+    where: employees_bool_exp!
+  ): employees_mutation_response
+
+  # delete single row from the table: "employees"
+  delete_employees_by_pk(id: uuid!): employees
+
+  # delete data from the table: "passport_info"
+  delete_passport_info(
+    # filter the rows which have to be deleted
+    where: passport_info_bool_exp!
+  ): passport_info_mutation_response
+
+  # delete single row from the table: "passport_info"
+  delete_passport_info_by_pk(id: Int!): passport_info
+
+  # delete data from the table: "payrolls"
+  delete_payrolls(
+    # filter the rows which have to be deleted
+    where: payrolls_bool_exp!
+  ): payrolls_mutation_response
+
+  # delete single row from the table: "payrolls"
+  delete_payrolls_by_pk(id: uuid!): payrolls
+
+  # delete data from the table: "profile"
+  delete_profile(
+    # filter the rows which have to be deleted
+    where: profile_bool_exp!
+  ): profile_mutation_response
+
+  # delete single row from the table: "profile"
+  delete_profile_by_pk(id: Int!): profile
+
+  # delete data from the table: "tag"
+  delete_tag(
+    # filter the rows which have to be deleted
+    where: tag_bool_exp!
+  ): tag_mutation_response
+
+  # delete single row from the table: "tag"
+  delete_tag_by_pk(id: Int!): tag
+
+  # delete data from the table: "users"
+  delete_users(
+    # filter the rows which have to be deleted
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  # delete single row from the table: "users"
+  delete_users_by_pk(id: String!): users
+
+  # delete data from the table: "videos"
+  delete_videos(
+    # filter the rows which have to be deleted
+    where: videos_bool_exp!
+  ): videos_mutation_response
+
+  # delete single row from the table: "videos"
+  delete_videos_by_pk(id: Int!): videos
+
+  # insert data into the table: "article"
+  insert_article(
+    # the rows to be inserted
+    objects: [article_insert_input!]!
+
+    # on conflict condition
+    on_conflict: article_on_conflict
+  ): article_mutation_response
+
+  # insert a single row into the table: "article"
+  insert_article_one(
+    # the row to be inserted
+    object: article_insert_input!
+
+    # on conflict condition
+    on_conflict: article_on_conflict
+  ): article
+
+  # insert data into the table: "article_tag"
+  insert_article_tag(
+    # the rows to be inserted
+    objects: [article_tag_insert_input!]!
+
+    # on conflict condition
+    on_conflict: article_tag_on_conflict
+  ): article_tag_mutation_response
+
+  # insert a single row into the table: "article_tag"
+  insert_article_tag_one(
+    # the row to be inserted
+    object: article_tag_insert_input!
+
+    # on conflict condition
+    on_conflict: article_tag_on_conflict
+  ): article_tag
+
+  # insert data into the table: "author"
+  insert_author(
+    # the rows to be inserted
+    objects: [author_insert_input!]!
+
+    # on conflict condition
+    on_conflict: author_on_conflict
+  ): author_mutation_response
+
+  # insert data into the table: "author_average_rating"
+  insert_author_average_rating(
+    # the rows to be inserted
+    objects: [author_average_rating_insert_input!]!
+
+    # on conflict condition
+    on_conflict: author_average_rating_on_conflict
+  ): author_average_rating_mutation_response
+
+  # insert a single row into the table: "author_average_rating"
+  insert_author_average_rating_one(
+    # the row to be inserted
+    object: author_average_rating_insert_input!
+
+    # on conflict condition
+    on_conflict: author_average_rating_on_conflict
+  ): author_average_rating
+
+  # insert a single row into the table: "author"
+  insert_author_one(
+    # the row to be inserted
+    object: author_insert_input!
+
+    # on conflict condition
+    on_conflict: author_on_conflict
+  ): author
+
+  # insert data into the table: "employees"
+  insert_employees(
+    # the rows to be inserted
+    objects: [employees_insert_input!]!
+
+    # on conflict condition
+    on_conflict: employees_on_conflict
+  ): employees_mutation_response
+
+  # insert a single row into the table: "employees"
+  insert_employees_one(
+    # the row to be inserted
+    object: employees_insert_input!
+
+    # on conflict condition
+    on_conflict: employees_on_conflict
+  ): employees
+
+  # insert data into the table: "passport_info"
+  insert_passport_info(
+    # the rows to be inserted
+    objects: [passport_info_insert_input!]!
+
+    # on conflict condition
+    on_conflict: passport_info_on_conflict
+  ): passport_info_mutation_response
+
+  # insert a single row into the table: "passport_info"
+  insert_passport_info_one(
+    # the row to be inserted
+    object: passport_info_insert_input!
+
+    # on conflict condition
+    on_conflict: passport_info_on_conflict
+  ): passport_info
+
+  # insert data into the table: "payrolls"
+  insert_payrolls(
+    # the rows to be inserted
+    objects: [payrolls_insert_input!]!
+
+    # on conflict condition
+    on_conflict: payrolls_on_conflict
+  ): payrolls_mutation_response
+
+  # insert a single row into the table: "payrolls"
+  insert_payrolls_one(
+    # the row to be inserted
+    object: payrolls_insert_input!
+
+    # on conflict condition
+    on_conflict: payrolls_on_conflict
+  ): payrolls
+
+  # insert data into the table: "profile"
+  insert_profile(
+    # the rows to be inserted
+    objects: [profile_insert_input!]!
+
+    # on conflict condition
+    on_conflict: profile_on_conflict
+  ): profile_mutation_response
+
+  # insert a single row into the table: "profile"
+  insert_profile_one(
+    # the row to be inserted
+    object: profile_insert_input!
+
+    # on conflict condition
+    on_conflict: profile_on_conflict
+  ): profile
+
+  # insert data into the table: "tag"
+  insert_tag(
+    # the rows to be inserted
+    objects: [tag_insert_input!]!
+
+    # on conflict condition
+    on_conflict: tag_on_conflict
+  ): tag_mutation_response
+
+  # insert a single row into the table: "tag"
+  insert_tag_one(
+    # the row to be inserted
+    object: tag_insert_input!
+
+    # on conflict condition
+    on_conflict: tag_on_conflict
+  ): tag
+
+  # insert data into the table: "users"
+  insert_users(
+    # the rows to be inserted
+    objects: [users_insert_input!]!
+
+    # on conflict condition
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  # insert a single row into the table: "users"
+  insert_users_one(
+    # the row to be inserted
+    object: users_insert_input!
+
+    # on conflict condition
+    on_conflict: users_on_conflict
+  ): users
+
+  # insert data into the table: "videos"
+  insert_videos(
+    # the rows to be inserted
+    objects: [videos_insert_input!]!
+
+    # on conflict condition
+    on_conflict: videos_on_conflict
+  ): videos_mutation_response
+
+  # insert a single row into the table: "videos"
+  insert_videos_one(
+    # the row to be inserted
+    object: videos_insert_input!
+
+    # on conflict condition
+    on_conflict: videos_on_conflict
+  ): videos
+
+  # update data of the table: "article"
+  update_article(
+    # increments the integer columns with given value of the filtered values
+    _inc: article_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: article_set_input
+
+    # filter the rows which have to be updated
+    where: article_bool_exp!
+  ): article_mutation_response
+
+  # update single row of the table: "article"
+  update_article_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: article_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: article_set_input
+    pk_columns: article_pk_columns_input!
+  ): article
+
+  # update data of the table: "article_tag"
+  update_article_tag(
+    # increments the integer columns with given value of the filtered values
+    _inc: article_tag_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: article_tag_set_input
+
+    # filter the rows which have to be updated
+    where: article_tag_bool_exp!
+  ): article_tag_mutation_response
+
+  # update single row of the table: "article_tag"
+  update_article_tag_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: article_tag_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: article_tag_set_input
+    pk_columns: article_tag_pk_columns_input!
+  ): article_tag
+
+  # update data of the table: "author"
+  update_author(
+    # increments the integer columns with given value of the filtered values
+    _inc: author_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: author_set_input
+
+    # filter the rows which have to be updated
+    where: author_bool_exp!
+  ): author_mutation_response
+
+  # update data of the table: "author_average_rating"
+  update_author_average_rating(
+    # increments the integer columns with given value of the filtered values
+    _inc: author_average_rating_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: author_average_rating_set_input
+
+    # filter the rows which have to be updated
+    where: author_average_rating_bool_exp!
+  ): author_average_rating_mutation_response
+
+  # update single row of the table: "author_average_rating"
+  update_author_average_rating_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: author_average_rating_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: author_average_rating_set_input
+    pk_columns: author_average_rating_pk_columns_input!
+  ): author_average_rating
+
+  # update single row of the table: "author"
+  update_author_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: author_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: author_set_input
+    pk_columns: author_pk_columns_input!
+  ): author
+
+  # update data of the table: "employees"
+  update_employees(
+    # sets the columns of the filtered rows to the given values
+    _set: employees_set_input
+
+    # filter the rows which have to be updated
+    where: employees_bool_exp!
+  ): employees_mutation_response
+
+  # update single row of the table: "employees"
+  update_employees_by_pk(
+    # sets the columns of the filtered rows to the given values
+    _set: employees_set_input
+    pk_columns: employees_pk_columns_input!
+  ): employees
+
+  # update data of the table: "passport_info"
+  update_passport_info(
+    # increments the integer columns with given value of the filtered values
+    _inc: passport_info_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: passport_info_set_input
+
+    # filter the rows which have to be updated
+    where: passport_info_bool_exp!
+  ): passport_info_mutation_response
+
+  # update single row of the table: "passport_info"
+  update_passport_info_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: passport_info_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: passport_info_set_input
+    pk_columns: passport_info_pk_columns_input!
+  ): passport_info
+
+  # update data of the table: "payrolls"
+  update_payrolls(
+    # increments the integer columns with given value of the filtered values
+    _inc: payrolls_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: payrolls_set_input
+
+    # filter the rows which have to be updated
+    where: payrolls_bool_exp!
+  ): payrolls_mutation_response
+
+  # update single row of the table: "payrolls"
+  update_payrolls_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: payrolls_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: payrolls_set_input
+    pk_columns: payrolls_pk_columns_input!
+  ): payrolls
+
+  # update data of the table: "profile"
+  update_profile(
+    # increments the integer columns with given value of the filtered values
+    _inc: profile_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: profile_set_input
+
+    # filter the rows which have to be updated
+    where: profile_bool_exp!
+  ): profile_mutation_response
+
+  # update single row of the table: "profile"
+  update_profile_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: profile_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: profile_set_input
+    pk_columns: profile_pk_columns_input!
+  ): profile
+
+  # update data of the table: "tag"
+  update_tag(
+    # increments the integer columns with given value of the filtered values
+    _inc: tag_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: tag_set_input
+
+    # filter the rows which have to be updated
+    where: tag_bool_exp!
+  ): tag_mutation_response
+
+  # update single row of the table: "tag"
+  update_tag_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: tag_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: tag_set_input
+    pk_columns: tag_pk_columns_input!
+  ): tag
+
+  # update data of the table: "users"
+  update_users(
+    # sets the columns of the filtered rows to the given values
+    _set: users_set_input
+
+    # filter the rows which have to be updated
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  # update single row of the table: "users"
+  update_users_by_pk(
+    # sets the columns of the filtered rows to the given values
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  # update data of the table: "videos"
+  update_videos(
+    # increments the integer columns with given value of the filtered values
+    _inc: videos_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: videos_set_input
+
+    # filter the rows which have to be updated
+    where: videos_bool_exp!
+  ): videos_mutation_response
+
+  # update single row of the table: "videos"
+  update_videos_by_pk(
+    # increments the integer columns with given value of the filtered values
+    _inc: videos_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: videos_set_input
+    pk_columns: videos_pk_columns_input!
+  ): videos
+}
+
+scalar numeric
+
+# expression to compare columns of type numeric. All fields are combined with logical 'AND'.
+input numeric_comparison_exp {
+  _eq: numeric
+  _gt: numeric
+  _gte: numeric
+  _in: [numeric!]
+  _is_null: Boolean
+  _lt: numeric
+  _lte: numeric
+  _neq: numeric
+  _nin: [numeric!]
+}
+
+# column ordering options
+enum order_by {
+  # in the ascending order, nulls last
+  asc
+
+  # in the ascending order, nulls first
+  asc_nulls_first
+
+  # in the ascending order, nulls last
+  asc_nulls_last
+
+  # in the descending order, nulls first
+  desc
+
+  # in the descending order, nulls first
+  desc_nulls_first
+
+  # in the descending order, nulls last
+  desc_nulls_last
+}
+
+# columns and relationships of "passport_info"
+type passport_info {
+  id: Int!
+
+  # An object relationship
+  owner: author!
+  owner_id: Int!
+  passport_number: String!
+}
+
+# aggregated selection of "passport_info"
+type passport_info_aggregate {
+  aggregate: passport_info_aggregate_fields
+  nodes: [passport_info!]!
+}
+
+# aggregate fields of "passport_info"
+type passport_info_aggregate_fields {
+  avg: passport_info_avg_fields
+  count(columns: [passport_info_select_column!], distinct: Boolean): Int
+  max: passport_info_max_fields
+  min: passport_info_min_fields
+  stddev: passport_info_stddev_fields
+  stddev_pop: passport_info_stddev_pop_fields
+  stddev_samp: passport_info_stddev_samp_fields
+  sum: passport_info_sum_fields
+  var_pop: passport_info_var_pop_fields
+  var_samp: passport_info_var_samp_fields
+  variance: passport_info_variance_fields
+}
+
+# order by aggregate values of table "passport_info"
+input passport_info_aggregate_order_by {
+  avg: passport_info_avg_order_by
+  count: order_by
+  max: passport_info_max_order_by
+  min: passport_info_min_order_by
+  stddev: passport_info_stddev_order_by
+  stddev_pop: passport_info_stddev_pop_order_by
+  stddev_samp: passport_info_stddev_samp_order_by
+  sum: passport_info_sum_order_by
+  var_pop: passport_info_var_pop_order_by
+  var_samp: passport_info_var_samp_order_by
+  variance: passport_info_variance_order_by
+}
+
+# input type for inserting array relation for remote table "passport_info"
+input passport_info_arr_rel_insert_input {
+  data: [passport_info_insert_input!]!
+  on_conflict: passport_info_on_conflict
+}
+
+# aggregate avg on columns
+type passport_info_avg_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by avg() on columns of table "passport_info"
+input passport_info_avg_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# Boolean expression to filter rows from the table "passport_info". All fields are combined with a logical 'AND'.
+input passport_info_bool_exp {
+  _and: [passport_info_bool_exp]
+  _not: passport_info_bool_exp
+  _or: [passport_info_bool_exp]
+  id: Int_comparison_exp
+  owner: author_bool_exp
+  owner_id: Int_comparison_exp
+  passport_number: String_comparison_exp
+}
+
+# unique or primary key constraints on table "passport_info"
+enum passport_info_constraint {
+  # unique or primary key constraint
+  passport_info_owner_id_key
+
+  # unique or primary key constraint
+  passport_info_pkey
+}
+
+# input type for incrementing integer column in table "passport_info"
+input passport_info_inc_input {
+  id: Int
+  owner_id: Int
+}
+
+# input type for inserting data into table "passport_info"
+input passport_info_insert_input {
+  id: Int
+  owner: author_obj_rel_insert_input
+  owner_id: Int
+  passport_number: String
+}
+
+# aggregate max on columns
+type passport_info_max_fields {
+  id: Int
+  owner_id: Int
+  passport_number: String
+}
+
+# order by max() on columns of table "passport_info"
+input passport_info_max_order_by {
+  id: order_by
+  owner_id: order_by
+  passport_number: order_by
+}
+
+# aggregate min on columns
+type passport_info_min_fields {
+  id: Int
+  owner_id: Int
+  passport_number: String
+}
+
+# order by min() on columns of table "passport_info"
+input passport_info_min_order_by {
+  id: order_by
+  owner_id: order_by
+  passport_number: order_by
+}
+
+# response of any mutation on the table "passport_info"
+type passport_info_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [passport_info!]!
+}
+
+# input type for inserting object relation for remote table "passport_info"
+input passport_info_obj_rel_insert_input {
+  data: passport_info_insert_input!
+  on_conflict: passport_info_on_conflict
+}
+
+# on conflict condition type for table "passport_info"
+input passport_info_on_conflict {
+  constraint: passport_info_constraint!
+  update_columns: [passport_info_update_column!]!
+  where: passport_info_bool_exp
+}
+
+# ordering options when selecting data from "passport_info"
+input passport_info_order_by {
+  id: order_by
+  owner: author_order_by
+  owner_id: order_by
+  passport_number: order_by
+}
+
+# primary key columns input for table: "passport_info"
+input passport_info_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "passport_info"
+enum passport_info_select_column {
+  # column name
+  id
+
+  # column name
+  owner_id
+
+  # column name
+  passport_number
+}
+
+# input type for updating data in table "passport_info"
+input passport_info_set_input {
+  id: Int
+  owner_id: Int
+  passport_number: String
+}
+
+# aggregate stddev on columns
+type passport_info_stddev_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by stddev() on columns of table "passport_info"
+input passport_info_stddev_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# aggregate stddev_pop on columns
+type passport_info_stddev_pop_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by stddev_pop() on columns of table "passport_info"
+input passport_info_stddev_pop_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# aggregate stddev_samp on columns
+type passport_info_stddev_samp_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by stddev_samp() on columns of table "passport_info"
+input passport_info_stddev_samp_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# aggregate sum on columns
+type passport_info_sum_fields {
+  id: Int
+  owner_id: Int
+}
+
+# order by sum() on columns of table "passport_info"
+input passport_info_sum_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# update columns of table "passport_info"
+enum passport_info_update_column {
+  # column name
+  id
+
+  # column name
+  owner_id
+
+  # column name
+  passport_number
+}
+
+# aggregate var_pop on columns
+type passport_info_var_pop_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by var_pop() on columns of table "passport_info"
+input passport_info_var_pop_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# aggregate var_samp on columns
+type passport_info_var_samp_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by var_samp() on columns of table "passport_info"
+input passport_info_var_samp_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# aggregate variance on columns
+type passport_info_variance_fields {
+  id: Float
+  owner_id: Float
+}
+
+# order by variance() on columns of table "passport_info"
+input passport_info_variance_order_by {
+  id: order_by
+  owner_id: order_by
+}
+
+# columns and relationships of "payrolls"
+type payrolls {
+  # An object relationship
+  employee: employees!
+  employee_id: uuid!
+  id: uuid!
+  salary: Int!
+}
+
+# aggregated selection of "payrolls"
+type payrolls_aggregate {
+  aggregate: payrolls_aggregate_fields
+  nodes: [payrolls!]!
+}
+
+# aggregate fields of "payrolls"
+type payrolls_aggregate_fields {
+  avg: payrolls_avg_fields
+  count(columns: [payrolls_select_column!], distinct: Boolean): Int
+  max: payrolls_max_fields
+  min: payrolls_min_fields
+  stddev: payrolls_stddev_fields
+  stddev_pop: payrolls_stddev_pop_fields
+  stddev_samp: payrolls_stddev_samp_fields
+  sum: payrolls_sum_fields
+  var_pop: payrolls_var_pop_fields
+  var_samp: payrolls_var_samp_fields
+  variance: payrolls_variance_fields
+}
+
+# order by aggregate values of table "payrolls"
+input payrolls_aggregate_order_by {
+  avg: payrolls_avg_order_by
+  count: order_by
+  max: payrolls_max_order_by
+  min: payrolls_min_order_by
+  stddev: payrolls_stddev_order_by
+  stddev_pop: payrolls_stddev_pop_order_by
+  stddev_samp: payrolls_stddev_samp_order_by
+  sum: payrolls_sum_order_by
+  var_pop: payrolls_var_pop_order_by
+  var_samp: payrolls_var_samp_order_by
+  variance: payrolls_variance_order_by
+}
+
+# input type for inserting array relation for remote table "payrolls"
+input payrolls_arr_rel_insert_input {
+  data: [payrolls_insert_input!]!
+  on_conflict: payrolls_on_conflict
+}
+
+# aggregate avg on columns
+type payrolls_avg_fields {
+  salary: Float
+}
+
+# order by avg() on columns of table "payrolls"
+input payrolls_avg_order_by {
+  salary: order_by
+}
+
+# Boolean expression to filter rows from the table "payrolls". All fields are combined with a logical 'AND'.
+input payrolls_bool_exp {
+  _and: [payrolls_bool_exp]
+  _not: payrolls_bool_exp
+  _or: [payrolls_bool_exp]
+  employee: employees_bool_exp
+  employee_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  salary: Int_comparison_exp
+}
+
+# unique or primary key constraints on table "payrolls"
+enum payrolls_constraint {
+  # unique or primary key constraint
+  payroll_employee_id_key
+
+  # unique or primary key constraint
+  payroll_pkey
+}
+
+# input type for incrementing integer column in table "payrolls"
+input payrolls_inc_input {
+  salary: Int
+}
+
+# input type for inserting data into table "payrolls"
+input payrolls_insert_input {
+  employee: employees_obj_rel_insert_input
+  employee_id: uuid
+  id: uuid
+  salary: Int
+}
+
+# aggregate max on columns
+type payrolls_max_fields {
+  employee_id: uuid
+  id: uuid
+  salary: Int
+}
+
+# order by max() on columns of table "payrolls"
+input payrolls_max_order_by {
+  employee_id: order_by
+  id: order_by
+  salary: order_by
+}
+
+# aggregate min on columns
+type payrolls_min_fields {
+  employee_id: uuid
+  id: uuid
+  salary: Int
+}
+
+# order by min() on columns of table "payrolls"
+input payrolls_min_order_by {
+  employee_id: order_by
+  id: order_by
+  salary: order_by
+}
+
+# response of any mutation on the table "payrolls"
+type payrolls_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [payrolls!]!
+}
+
+# input type for inserting object relation for remote table "payrolls"
+input payrolls_obj_rel_insert_input {
+  data: payrolls_insert_input!
+  on_conflict: payrolls_on_conflict
+}
+
+# on conflict condition type for table "payrolls"
+input payrolls_on_conflict {
+  constraint: payrolls_constraint!
+  update_columns: [payrolls_update_column!]!
+  where: payrolls_bool_exp
+}
+
+# ordering options when selecting data from "payrolls"
+input payrolls_order_by {
+  employee: employees_order_by
+  employee_id: order_by
+  id: order_by
+  salary: order_by
+}
+
+# primary key columns input for table: "payrolls"
+input payrolls_pk_columns_input {
+  id: uuid!
+}
+
+# select columns of table "payrolls"
+enum payrolls_select_column {
+  # column name
+  employee_id
+
+  # column name
+  id
+
+  # column name
+  salary
+}
+
+# input type for updating data in table "payrolls"
+input payrolls_set_input {
+  employee_id: uuid
+  id: uuid
+  salary: Int
+}
+
+# aggregate stddev on columns
+type payrolls_stddev_fields {
+  salary: Float
+}
+
+# order by stddev() on columns of table "payrolls"
+input payrolls_stddev_order_by {
+  salary: order_by
+}
+
+# aggregate stddev_pop on columns
+type payrolls_stddev_pop_fields {
+  salary: Float
+}
+
+# order by stddev_pop() on columns of table "payrolls"
+input payrolls_stddev_pop_order_by {
+  salary: order_by
+}
+
+# aggregate stddev_samp on columns
+type payrolls_stddev_samp_fields {
+  salary: Float
+}
+
+# order by stddev_samp() on columns of table "payrolls"
+input payrolls_stddev_samp_order_by {
+  salary: order_by
+}
+
+# aggregate sum on columns
+type payrolls_sum_fields {
+  salary: Int
+}
+
+# order by sum() on columns of table "payrolls"
+input payrolls_sum_order_by {
+  salary: order_by
+}
+
+# update columns of table "payrolls"
+enum payrolls_update_column {
+  # column name
+  employee_id
+
+  # column name
+  id
+
+  # column name
+  salary
+}
+
+# aggregate var_pop on columns
+type payrolls_var_pop_fields {
+  salary: Float
+}
+
+# order by var_pop() on columns of table "payrolls"
+input payrolls_var_pop_order_by {
+  salary: order_by
+}
+
+# aggregate var_samp on columns
+type payrolls_var_samp_fields {
+  salary: Float
+}
+
+# order by var_samp() on columns of table "payrolls"
+input payrolls_var_samp_order_by {
+  salary: order_by
+}
+
+# aggregate variance on columns
+type payrolls_variance_fields {
+  salary: Float
+}
+
+# order by variance() on columns of table "payrolls"
+input payrolls_variance_order_by {
+  salary: order_by
+}
+
+# columns and relationships of "profile"
+type profile {
+  id: Int!
+  name: String!
+}
+
+# aggregated selection of "profile"
+type profile_aggregate {
+  aggregate: profile_aggregate_fields
+  nodes: [profile!]!
+}
+
+# aggregate fields of "profile"
+type profile_aggregate_fields {
+  avg: profile_avg_fields
+  count(columns: [profile_select_column!], distinct: Boolean): Int
+  max: profile_max_fields
+  min: profile_min_fields
+  stddev: profile_stddev_fields
+  stddev_pop: profile_stddev_pop_fields
+  stddev_samp: profile_stddev_samp_fields
+  sum: profile_sum_fields
+  var_pop: profile_var_pop_fields
+  var_samp: profile_var_samp_fields
+  variance: profile_variance_fields
+}
+
+# order by aggregate values of table "profile"
+input profile_aggregate_order_by {
+  avg: profile_avg_order_by
+  count: order_by
+  max: profile_max_order_by
+  min: profile_min_order_by
+  stddev: profile_stddev_order_by
+  stddev_pop: profile_stddev_pop_order_by
+  stddev_samp: profile_stddev_samp_order_by
+  sum: profile_sum_order_by
+  var_pop: profile_var_pop_order_by
+  var_samp: profile_var_samp_order_by
+  variance: profile_variance_order_by
+}
+
+# input type for inserting array relation for remote table "profile"
+input profile_arr_rel_insert_input {
+  data: [profile_insert_input!]!
+  on_conflict: profile_on_conflict
+}
+
+# aggregate avg on columns
+type profile_avg_fields {
+  id: Float
+}
+
+# order by avg() on columns of table "profile"
+input profile_avg_order_by {
+  id: order_by
+}
+
+# Boolean expression to filter rows from the table "profile". All fields are combined with a logical 'AND'.
+input profile_bool_exp {
+  _and: [profile_bool_exp]
+  _not: profile_bool_exp
+  _or: [profile_bool_exp]
+  id: Int_comparison_exp
+  name: String_comparison_exp
+}
+
+# unique or primary key constraints on table "profile"
+enum profile_constraint {
+  # unique or primary key constraint
+  profile_pkey
+}
+
+# input type for incrementing integer column in table "profile"
+input profile_inc_input {
+  id: Int
+}
+
+# input type for inserting data into table "profile"
+input profile_insert_input {
+  id: Int
+  name: String
+}
+
+# aggregate max on columns
+type profile_max_fields {
+  id: Int
+  name: String
+}
+
+# order by max() on columns of table "profile"
+input profile_max_order_by {
+  id: order_by
+  name: order_by
+}
+
+# aggregate min on columns
+type profile_min_fields {
+  id: Int
+  name: String
+}
+
+# order by min() on columns of table "profile"
+input profile_min_order_by {
+  id: order_by
+  name: order_by
+}
+
+# response of any mutation on the table "profile"
+type profile_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [profile!]!
+}
+
+# input type for inserting object relation for remote table "profile"
+input profile_obj_rel_insert_input {
+  data: profile_insert_input!
+  on_conflict: profile_on_conflict
+}
+
+# on conflict condition type for table "profile"
+input profile_on_conflict {
+  constraint: profile_constraint!
+  update_columns: [profile_update_column!]!
+  where: profile_bool_exp
+}
+
+# ordering options when selecting data from "profile"
+input profile_order_by {
+  id: order_by
+  name: order_by
+}
+
+# primary key columns input for table: "profile"
+input profile_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "profile"
+enum profile_select_column {
+  # column name
+  id
+
+  # column name
+  name
+}
+
+# input type for updating data in table "profile"
+input profile_set_input {
+  id: Int
+  name: String
+}
+
+# aggregate stddev on columns
+type profile_stddev_fields {
+  id: Float
+}
+
+# order by stddev() on columns of table "profile"
+input profile_stddev_order_by {
+  id: order_by
+}
+
+# aggregate stddev_pop on columns
+type profile_stddev_pop_fields {
+  id: Float
+}
+
+# order by stddev_pop() on columns of table "profile"
+input profile_stddev_pop_order_by {
+  id: order_by
+}
+
+# aggregate stddev_samp on columns
+type profile_stddev_samp_fields {
+  id: Float
+}
+
+# order by stddev_samp() on columns of table "profile"
+input profile_stddev_samp_order_by {
+  id: order_by
+}
+
+# aggregate sum on columns
+type profile_sum_fields {
+  id: Int
+}
+
+# order by sum() on columns of table "profile"
+input profile_sum_order_by {
+  id: order_by
+}
+
+# update columns of table "profile"
+enum profile_update_column {
+  # column name
+  id
+
+  # column name
+  name
+}
+
+# aggregate var_pop on columns
+type profile_var_pop_fields {
+  id: Float
+}
+
+# order by var_pop() on columns of table "profile"
+input profile_var_pop_order_by {
+  id: order_by
+}
+
+# aggregate var_samp on columns
+type profile_var_samp_fields {
+  id: Float
+}
+
+# order by var_samp() on columns of table "profile"
+input profile_var_samp_order_by {
+  id: order_by
+}
+
+# aggregate variance on columns
+type profile_variance_fields {
+  id: Float
+}
+
+# order by variance() on columns of table "profile"
+input profile_variance_order_by {
+  id: order_by
+}
+
+# query root
+type query_root {
+  # fetch data from the table: "article"
+  article(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): [article!]!
+
+  # fetch aggregated fields from the table: "article"
+  article_aggregate(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): article_aggregate!
+
+  # fetch data from the table: "article" using primary key columns
+  article_by_pk(id: Int!): article
+
+  # fetch data from the table: "article_tag"
+  article_tag(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): [article_tag!]!
+
+  # fetch aggregated fields from the table: "article_tag"
+  article_tag_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): article_tag_aggregate!
+
+  # fetch data from the table: "article_tag" using primary key columns
+  article_tag_by_pk(article_id: Int!, tag_id: Int!): article_tag
+
+  # fetch data from the table: "article_tags_view"
+  article_tags_view(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): [article_tags_view!]!
+
+  # fetch aggregated fields from the table: "article_tags_view"
+  article_tags_view_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): article_tags_view_aggregate!
+
+  # fetch data from the table: "author"
+  author(
+    # distinct select on columns
+    distinct_on: [author_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_order_by!]
+
+    # filter the rows returned
+    where: author_bool_exp
+  ): [author!]!
+
+  # fetch aggregated fields from the table: "author"
+  author_aggregate(
+    # distinct select on columns
+    distinct_on: [author_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_order_by!]
+
+    # filter the rows returned
+    where: author_bool_exp
+  ): author_aggregate!
+
+  # fetch data from the table: "author_average_rating"
+  author_average_rating(
+    # distinct select on columns
+    distinct_on: [author_average_rating_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_average_rating_order_by!]
+
+    # filter the rows returned
+    where: author_average_rating_bool_exp
+  ): [author_average_rating!]!
+
+  # fetch aggregated fields from the table: "author_average_rating"
+  author_average_rating_aggregate(
+    # distinct select on columns
+    distinct_on: [author_average_rating_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_average_rating_order_by!]
+
+    # filter the rows returned
+    where: author_average_rating_bool_exp
+  ): author_average_rating_aggregate!
+
+  # fetch data from the table: "author_average_rating" using primary key columns
+  author_average_rating_by_pk(id: Int!): author_average_rating
+
+  # fetch data from the table: "author" using primary key columns
+  author_by_pk(id: Int!): author
+
+  # fetch data from the table: "employees"
+  employees(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): [employees!]!
+
+  # fetch aggregated fields from the table: "employees"
+  employees_aggregate(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): employees_aggregate!
+
+  # fetch data from the table: "employees" using primary key columns
+  employees_by_pk(id: uuid!): employees
+
+  # fetch data from the table: "passport_info"
+  passport_info(
+    # distinct select on columns
+    distinct_on: [passport_info_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [passport_info_order_by!]
+
+    # filter the rows returned
+    where: passport_info_bool_exp
+  ): [passport_info!]!
+
+  # fetch aggregated fields from the table: "passport_info"
+  passport_info_aggregate(
+    # distinct select on columns
+    distinct_on: [passport_info_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [passport_info_order_by!]
+
+    # filter the rows returned
+    where: passport_info_bool_exp
+  ): passport_info_aggregate!
+
+  # fetch data from the table: "passport_info" using primary key columns
+  passport_info_by_pk(id: Int!): passport_info
+
+  # fetch data from the table: "payrolls"
+  payrolls(
+    # distinct select on columns
+    distinct_on: [payrolls_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [payrolls_order_by!]
+
+    # filter the rows returned
+    where: payrolls_bool_exp
+  ): [payrolls!]!
+
+  # fetch aggregated fields from the table: "payrolls"
+  payrolls_aggregate(
+    # distinct select on columns
+    distinct_on: [payrolls_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [payrolls_order_by!]
+
+    # filter the rows returned
+    where: payrolls_bool_exp
+  ): payrolls_aggregate!
+
+  # fetch data from the table: "payrolls" using primary key columns
+  payrolls_by_pk(id: uuid!): payrolls
+
+  # fetch data from the table: "profile"
+  profile(
+    # distinct select on columns
+    distinct_on: [profile_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [profile_order_by!]
+
+    # filter the rows returned
+    where: profile_bool_exp
+  ): [profile!]!
+
+  # fetch aggregated fields from the table: "profile"
+  profile_aggregate(
+    # distinct select on columns
+    distinct_on: [profile_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [profile_order_by!]
+
+    # filter the rows returned
+    where: profile_bool_exp
+  ): profile_aggregate!
+
+  # fetch data from the table: "profile" using primary key columns
+  profile_by_pk(id: Int!): profile
+
+  # fetch data from the table: "tag"
+  tag(
+    # distinct select on columns
+    distinct_on: [tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_order_by!]
+
+    # filter the rows returned
+    where: tag_bool_exp
+  ): [tag!]!
+
+  # fetch aggregated fields from the table: "tag"
+  tag_aggregate(
+    # distinct select on columns
+    distinct_on: [tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_order_by!]
+
+    # filter the rows returned
+    where: tag_bool_exp
+  ): tag_aggregate!
+
+  # fetch data from the table: "tag_articles_view"
+  tag_articles_view(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): [tag_articles_view!]!
+
+  # fetch aggregated fields from the table: "tag_articles_view"
+  tag_articles_view_aggregate(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): tag_articles_view_aggregate!
+
+  # fetch data from the table: "tag" using primary key columns
+  tag_by_pk(id: Int!): tag
+
+  # fetch data from the table: "users"
+  users(
+    # distinct select on columns
+    distinct_on: [users_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [users_order_by!]
+
+    # filter the rows returned
+    where: users_bool_exp
+  ): [users!]!
+
+  # fetch aggregated fields from the table: "users"
+  users_aggregate(
+    # distinct select on columns
+    distinct_on: [users_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [users_order_by!]
+
+    # filter the rows returned
+    where: users_bool_exp
+  ): users_aggregate!
+
+  # fetch data from the table: "users" using primary key columns
+  users_by_pk(id: String!): users
+
+  # fetch data from the table: "videos"
+  videos(
+    # distinct select on columns
+    distinct_on: [videos_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [videos_order_by!]
+
+    # filter the rows returned
+    where: videos_bool_exp
+  ): [videos!]!
+
+  # fetch aggregated fields from the table: "videos"
+  videos_aggregate(
+    # distinct select on columns
+    distinct_on: [videos_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [videos_order_by!]
+
+    # filter the rows returned
+    where: videos_bool_exp
+  ): videos_aggregate!
+
+  # fetch data from the table: "videos" using primary key columns
+  videos_by_pk(id: Int!): videos
+}
+
+# expression to compare columns of type String. All fields are combined with logical 'AND'.
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+# subscription root
+type subscription_root {
+  # fetch data from the table: "article"
+  article(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): [article!]!
+
+  # fetch aggregated fields from the table: "article"
+  article_aggregate(
+    # distinct select on columns
+    distinct_on: [article_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_order_by!]
+
+    # filter the rows returned
+    where: article_bool_exp
+  ): article_aggregate!
+
+  # fetch data from the table: "article" using primary key columns
+  article_by_pk(id: Int!): article
+
+  # fetch data from the table: "article_tag"
+  article_tag(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): [article_tag!]!
+
+  # fetch aggregated fields from the table: "article_tag"
+  article_tag_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): article_tag_aggregate!
+
+  # fetch data from the table: "article_tag" using primary key columns
+  article_tag_by_pk(article_id: Int!, tag_id: Int!): article_tag
+
+  # fetch data from the table: "article_tags_view"
+  article_tags_view(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): [article_tags_view!]!
+
+  # fetch aggregated fields from the table: "article_tags_view"
+  article_tags_view_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tags_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tags_view_order_by!]
+
+    # filter the rows returned
+    where: article_tags_view_bool_exp
+  ): article_tags_view_aggregate!
+
+  # fetch data from the table: "author"
+  author(
+    # distinct select on columns
+    distinct_on: [author_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_order_by!]
+
+    # filter the rows returned
+    where: author_bool_exp
+  ): [author!]!
+
+  # fetch aggregated fields from the table: "author"
+  author_aggregate(
+    # distinct select on columns
+    distinct_on: [author_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_order_by!]
+
+    # filter the rows returned
+    where: author_bool_exp
+  ): author_aggregate!
+
+  # fetch data from the table: "author_average_rating"
+  author_average_rating(
+    # distinct select on columns
+    distinct_on: [author_average_rating_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_average_rating_order_by!]
+
+    # filter the rows returned
+    where: author_average_rating_bool_exp
+  ): [author_average_rating!]!
+
+  # fetch aggregated fields from the table: "author_average_rating"
+  author_average_rating_aggregate(
+    # distinct select on columns
+    distinct_on: [author_average_rating_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [author_average_rating_order_by!]
+
+    # filter the rows returned
+    where: author_average_rating_bool_exp
+  ): author_average_rating_aggregate!
+
+  # fetch data from the table: "author_average_rating" using primary key columns
+  author_average_rating_by_pk(id: Int!): author_average_rating
+
+  # fetch data from the table: "author" using primary key columns
+  author_by_pk(id: Int!): author
+
+  # fetch data from the table: "employees"
+  employees(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): [employees!]!
+
+  # fetch aggregated fields from the table: "employees"
+  employees_aggregate(
+    # distinct select on columns
+    distinct_on: [employees_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [employees_order_by!]
+
+    # filter the rows returned
+    where: employees_bool_exp
+  ): employees_aggregate!
+
+  # fetch data from the table: "employees" using primary key columns
+  employees_by_pk(id: uuid!): employees
+
+  # fetch data from the table: "passport_info"
+  passport_info(
+    # distinct select on columns
+    distinct_on: [passport_info_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [passport_info_order_by!]
+
+    # filter the rows returned
+    where: passport_info_bool_exp
+  ): [passport_info!]!
+
+  # fetch aggregated fields from the table: "passport_info"
+  passport_info_aggregate(
+    # distinct select on columns
+    distinct_on: [passport_info_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [passport_info_order_by!]
+
+    # filter the rows returned
+    where: passport_info_bool_exp
+  ): passport_info_aggregate!
+
+  # fetch data from the table: "passport_info" using primary key columns
+  passport_info_by_pk(id: Int!): passport_info
+
+  # fetch data from the table: "payrolls"
+  payrolls(
+    # distinct select on columns
+    distinct_on: [payrolls_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [payrolls_order_by!]
+
+    # filter the rows returned
+    where: payrolls_bool_exp
+  ): [payrolls!]!
+
+  # fetch aggregated fields from the table: "payrolls"
+  payrolls_aggregate(
+    # distinct select on columns
+    distinct_on: [payrolls_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [payrolls_order_by!]
+
+    # filter the rows returned
+    where: payrolls_bool_exp
+  ): payrolls_aggregate!
+
+  # fetch data from the table: "payrolls" using primary key columns
+  payrolls_by_pk(id: uuid!): payrolls
+
+  # fetch data from the table: "profile"
+  profile(
+    # distinct select on columns
+    distinct_on: [profile_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [profile_order_by!]
+
+    # filter the rows returned
+    where: profile_bool_exp
+  ): [profile!]!
+
+  # fetch aggregated fields from the table: "profile"
+  profile_aggregate(
+    # distinct select on columns
+    distinct_on: [profile_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [profile_order_by!]
+
+    # filter the rows returned
+    where: profile_bool_exp
+  ): profile_aggregate!
+
+  # fetch data from the table: "profile" using primary key columns
+  profile_by_pk(id: Int!): profile
+
+  # fetch data from the table: "tag"
+  tag(
+    # distinct select on columns
+    distinct_on: [tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_order_by!]
+
+    # filter the rows returned
+    where: tag_bool_exp
+  ): [tag!]!
+
+  # fetch aggregated fields from the table: "tag"
+  tag_aggregate(
+    # distinct select on columns
+    distinct_on: [tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_order_by!]
+
+    # filter the rows returned
+    where: tag_bool_exp
+  ): tag_aggregate!
+
+  # fetch data from the table: "tag_articles_view"
+  tag_articles_view(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): [tag_articles_view!]!
+
+  # fetch aggregated fields from the table: "tag_articles_view"
+  tag_articles_view_aggregate(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): tag_articles_view_aggregate!
+
+  # fetch data from the table: "tag" using primary key columns
+  tag_by_pk(id: Int!): tag
+
+  # fetch data from the table: "users"
+  users(
+    # distinct select on columns
+    distinct_on: [users_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [users_order_by!]
+
+    # filter the rows returned
+    where: users_bool_exp
+  ): [users!]!
+
+  # fetch aggregated fields from the table: "users"
+  users_aggregate(
+    # distinct select on columns
+    distinct_on: [users_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [users_order_by!]
+
+    # filter the rows returned
+    where: users_bool_exp
+  ): users_aggregate!
+
+  # fetch data from the table: "users" using primary key columns
+  users_by_pk(id: String!): users
+
+  # fetch data from the table: "videos"
+  videos(
+    # distinct select on columns
+    distinct_on: [videos_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [videos_order_by!]
+
+    # filter the rows returned
+    where: videos_bool_exp
+  ): [videos!]!
+
+  # fetch aggregated fields from the table: "videos"
+  videos_aggregate(
+    # distinct select on columns
+    distinct_on: [videos_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [videos_order_by!]
+
+    # filter the rows returned
+    where: videos_bool_exp
+  ): videos_aggregate!
+
+  # fetch data from the table: "videos" using primary key columns
+  videos_by_pk(id: Int!): videos
+}
+
+# columns and relationships of "tag"
+type tag {
+  # An array relationship
+  articles(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): [tag_articles_view!]!
+
+  # An aggregated array relationship
+  articles_aggregate(
+    # distinct select on columns
+    distinct_on: [tag_articles_view_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [tag_articles_view_order_by!]
+
+    # filter the rows returned
+    where: tag_articles_view_bool_exp
+  ): tag_articles_view_aggregate!
+  id: Int!
+
+  # An array relationship
+  tag_articles(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): [article_tag!]!
+
+  # An aggregated array relationship
+  tag_articles_aggregate(
+    # distinct select on columns
+    distinct_on: [article_tag_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [article_tag_order_by!]
+
+    # filter the rows returned
+    where: article_tag_bool_exp
+  ): article_tag_aggregate!
+  tag_value: String!
+}
+
+# aggregated selection of "tag"
+type tag_aggregate {
+  aggregate: tag_aggregate_fields
+  nodes: [tag!]!
+}
+
+# aggregate fields of "tag"
+type tag_aggregate_fields {
+  avg: tag_avg_fields
+  count(columns: [tag_select_column!], distinct: Boolean): Int
+  max: tag_max_fields
+  min: tag_min_fields
+  stddev: tag_stddev_fields
+  stddev_pop: tag_stddev_pop_fields
+  stddev_samp: tag_stddev_samp_fields
+  sum: tag_sum_fields
+  var_pop: tag_var_pop_fields
+  var_samp: tag_var_samp_fields
+  variance: tag_variance_fields
+}
+
+# order by aggregate values of table "tag"
+input tag_aggregate_order_by {
+  avg: tag_avg_order_by
+  count: order_by
+  max: tag_max_order_by
+  min: tag_min_order_by
+  stddev: tag_stddev_order_by
+  stddev_pop: tag_stddev_pop_order_by
+  stddev_samp: tag_stddev_samp_order_by
+  sum: tag_sum_order_by
+  var_pop: tag_var_pop_order_by
+  var_samp: tag_var_samp_order_by
+  variance: tag_variance_order_by
+}
+
+# input type for inserting array relation for remote table "tag"
+input tag_arr_rel_insert_input {
+  data: [tag_insert_input!]!
+  on_conflict: tag_on_conflict
+}
+
+# columns and relationships of "tag_articles_view"
+type tag_articles_view {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  tag_id: Int
+  title: String
+}
+
+# aggregated selection of "tag_articles_view"
+type tag_articles_view_aggregate {
+  aggregate: tag_articles_view_aggregate_fields
+  nodes: [tag_articles_view!]!
+}
+
+# aggregate fields of "tag_articles_view"
+type tag_articles_view_aggregate_fields {
+  avg: tag_articles_view_avg_fields
+  count(columns: [tag_articles_view_select_column!], distinct: Boolean): Int
+  max: tag_articles_view_max_fields
+  min: tag_articles_view_min_fields
+  stddev: tag_articles_view_stddev_fields
+  stddev_pop: tag_articles_view_stddev_pop_fields
+  stddev_samp: tag_articles_view_stddev_samp_fields
+  sum: tag_articles_view_sum_fields
+  var_pop: tag_articles_view_var_pop_fields
+  var_samp: tag_articles_view_var_samp_fields
+  variance: tag_articles_view_variance_fields
+}
+
+# order by aggregate values of table "tag_articles_view"
+input tag_articles_view_aggregate_order_by {
+  avg: tag_articles_view_avg_order_by
+  count: order_by
+  max: tag_articles_view_max_order_by
+  min: tag_articles_view_min_order_by
+  stddev: tag_articles_view_stddev_order_by
+  stddev_pop: tag_articles_view_stddev_pop_order_by
+  stddev_samp: tag_articles_view_stddev_samp_order_by
+  sum: tag_articles_view_sum_order_by
+  var_pop: tag_articles_view_var_pop_order_by
+  var_samp: tag_articles_view_var_samp_order_by
+  variance: tag_articles_view_variance_order_by
+}
+
+# aggregate avg on columns
+type tag_articles_view_avg_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by avg() on columns of table "tag_articles_view"
+input tag_articles_view_avg_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# Boolean expression to filter rows from the table "tag_articles_view". All fields are combined with a logical 'AND'.
+input tag_articles_view_bool_exp {
+  _and: [tag_articles_view_bool_exp]
+  _not: tag_articles_view_bool_exp
+  _or: [tag_articles_view_bool_exp]
+  author_id: Int_comparison_exp
+  content: String_comparison_exp
+  id: Int_comparison_exp
+  rating: Int_comparison_exp
+  tag_id: Int_comparison_exp
+  title: String_comparison_exp
+}
+
+# aggregate max on columns
+type tag_articles_view_max_fields {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  tag_id: Int
+  title: String
+}
+
+# order by max() on columns of table "tag_articles_view"
+input tag_articles_view_max_order_by {
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+  title: order_by
+}
+
+# aggregate min on columns
+type tag_articles_view_min_fields {
+  author_id: Int
+  content: String
+  id: Int
+  rating: Int
+  tag_id: Int
+  title: String
+}
+
+# order by min() on columns of table "tag_articles_view"
+input tag_articles_view_min_order_by {
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+  title: order_by
+}
+
+# ordering options when selecting data from "tag_articles_view"
+input tag_articles_view_order_by {
+  author_id: order_by
+  content: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+  title: order_by
+}
+
+# select columns of table "tag_articles_view"
+enum tag_articles_view_select_column {
+  # column name
+  author_id
+
+  # column name
+  content
+
+  # column name
+  id
+
+  # column name
+  rating
+
+  # column name
+  tag_id
+
+  # column name
+  title
+}
+
+# aggregate stddev on columns
+type tag_articles_view_stddev_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by stddev() on columns of table "tag_articles_view"
+input tag_articles_view_stddev_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate stddev_pop on columns
+type tag_articles_view_stddev_pop_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by stddev_pop() on columns of table "tag_articles_view"
+input tag_articles_view_stddev_pop_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate stddev_samp on columns
+type tag_articles_view_stddev_samp_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by stddev_samp() on columns of table "tag_articles_view"
+input tag_articles_view_stddev_samp_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate sum on columns
+type tag_articles_view_sum_fields {
+  author_id: Int
+  id: Int
+  rating: Int
+  tag_id: Int
+}
+
+# order by sum() on columns of table "tag_articles_view"
+input tag_articles_view_sum_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate var_pop on columns
+type tag_articles_view_var_pop_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by var_pop() on columns of table "tag_articles_view"
+input tag_articles_view_var_pop_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate var_samp on columns
+type tag_articles_view_var_samp_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by var_samp() on columns of table "tag_articles_view"
+input tag_articles_view_var_samp_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate variance on columns
+type tag_articles_view_variance_fields {
+  author_id: Float
+  id: Float
+  rating: Float
+  tag_id: Float
+}
+
+# order by variance() on columns of table "tag_articles_view"
+input tag_articles_view_variance_order_by {
+  author_id: order_by
+  id: order_by
+  rating: order_by
+  tag_id: order_by
+}
+
+# aggregate avg on columns
+type tag_avg_fields {
+  id: Float
+}
+
+# order by avg() on columns of table "tag"
+input tag_avg_order_by {
+  id: order_by
+}
+
+# Boolean expression to filter rows from the table "tag". All fields are combined with a logical 'AND'.
+input tag_bool_exp {
+  _and: [tag_bool_exp]
+  _not: tag_bool_exp
+  _or: [tag_bool_exp]
+  articles: tag_articles_view_bool_exp
+  id: Int_comparison_exp
+  tag_articles: article_tag_bool_exp
+  tag_value: String_comparison_exp
+}
+
+# unique or primary key constraints on table "tag"
+enum tag_constraint {
+  # unique or primary key constraint
+  tag_pkey
+}
+
+# input type for incrementing integer column in table "tag"
+input tag_inc_input {
+  id: Int
+}
+
+# input type for inserting data into table "tag"
+input tag_insert_input {
+  id: Int
+  tag_articles: article_tag_arr_rel_insert_input
+  tag_value: String
+}
+
+# aggregate max on columns
+type tag_max_fields {
+  id: Int
+  tag_value: String
+}
+
+# order by max() on columns of table "tag"
+input tag_max_order_by {
+  id: order_by
+  tag_value: order_by
+}
+
+# aggregate min on columns
+type tag_min_fields {
+  id: Int
+  tag_value: String
+}
+
+# order by min() on columns of table "tag"
+input tag_min_order_by {
+  id: order_by
+  tag_value: order_by
+}
+
+# response of any mutation on the table "tag"
+type tag_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [tag!]!
+}
+
+# input type for inserting object relation for remote table "tag"
+input tag_obj_rel_insert_input {
+  data: tag_insert_input!
+  on_conflict: tag_on_conflict
+}
+
+# on conflict condition type for table "tag"
+input tag_on_conflict {
+  constraint: tag_constraint!
+  update_columns: [tag_update_column!]!
+  where: tag_bool_exp
+}
+
+# ordering options when selecting data from "tag"
+input tag_order_by {
+  articles_aggregate: tag_articles_view_aggregate_order_by
+  id: order_by
+  tag_articles_aggregate: article_tag_aggregate_order_by
+  tag_value: order_by
+}
+
+# primary key columns input for table: "tag"
+input tag_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "tag"
+enum tag_select_column {
+  # column name
+  id
+
+  # column name
+  tag_value
+}
+
+# input type for updating data in table "tag"
+input tag_set_input {
+  id: Int
+  tag_value: String
+}
+
+# aggregate stddev on columns
+type tag_stddev_fields {
+  id: Float
+}
+
+# order by stddev() on columns of table "tag"
+input tag_stddev_order_by {
+  id: order_by
+}
+
+# aggregate stddev_pop on columns
+type tag_stddev_pop_fields {
+  id: Float
+}
+
+# order by stddev_pop() on columns of table "tag"
+input tag_stddev_pop_order_by {
+  id: order_by
+}
+
+# aggregate stddev_samp on columns
+type tag_stddev_samp_fields {
+  id: Float
+}
+
+# order by stddev_samp() on columns of table "tag"
+input tag_stddev_samp_order_by {
+  id: order_by
+}
+
+# aggregate sum on columns
+type tag_sum_fields {
+  id: Int
+}
+
+# order by sum() on columns of table "tag"
+input tag_sum_order_by {
+  id: order_by
+}
+
+# update columns of table "tag"
+enum tag_update_column {
+  # column name
+  id
+
+  # column name
+  tag_value
+}
+
+# aggregate var_pop on columns
+type tag_var_pop_fields {
+  id: Float
+}
+
+# order by var_pop() on columns of table "tag"
+input tag_var_pop_order_by {
+  id: order_by
+}
+
+# aggregate var_samp on columns
+type tag_var_samp_fields {
+  id: Float
+}
+
+# order by var_samp() on columns of table "tag"
+input tag_var_samp_order_by {
+  id: order_by
+}
+
+# aggregate variance on columns
+type tag_variance_fields {
+  id: Float
+}
+
+# order by variance() on columns of table "tag"
+input tag_variance_order_by {
+  id: order_by
+}
+
+scalar timestamptz
+
+# expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+# columns and relationships of "users"
+type users {
+  created_at: timestamptz
+  id: String!
+  name: String
+  profile: String
+  updated_at: timestamptz
+}
+
+# aggregated selection of "users"
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
+}
+
+# aggregate fields of "users"
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int
+  max: users_max_fields
+  min: users_min_fields
+}
+
+# order by aggregate values of table "users"
+input users_aggregate_order_by {
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
+}
+
+# input type for inserting array relation for remote table "users"
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
+}
+
+# Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: String_comparison_exp
+  name: String_comparison_exp
+  profile: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+# unique or primary key constraints on table "users"
+enum users_constraint {
+  # unique or primary key constraint
+  users_pkey
+}
+
+# input type for inserting data into table "users"
+input users_insert_input {
+  created_at: timestamptz
+  id: String
+  name: String
+  profile: String
+  updated_at: timestamptz
+}
+
+# aggregate max on columns
+type users_max_fields {
+  created_at: timestamptz
+  id: String
+  name: String
+  profile: String
+  updated_at: timestamptz
+}
+
+# order by max() on columns of table "users"
+input users_max_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  profile: order_by
+  updated_at: order_by
+}
+
+# aggregate min on columns
+type users_min_fields {
+  created_at: timestamptz
+  id: String
+  name: String
+  profile: String
+  updated_at: timestamptz
+}
+
+# order by min() on columns of table "users"
+input users_min_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  profile: order_by
+  updated_at: order_by
+}
+
+# response of any mutation on the table "users"
+type users_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [users!]!
+}
+
+# input type for inserting object relation for remote table "users"
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
+}
+
+# on conflict condition type for table "users"
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+  where: users_bool_exp
+}
+
+# ordering options when selecting data from "users"
+input users_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  profile: order_by
+  updated_at: order_by
+}
+
+# primary key columns input for table: "users"
+input users_pk_columns_input {
+  id: String!
+}
+
+# select columns of table "users"
+enum users_select_column {
+  # column name
+  created_at
+
+  # column name
+  id
+
+  # column name
+  name
+
+  # column name
+  profile
+
+  # column name
+  updated_at
+}
+
+# input type for updating data in table "users"
+input users_set_input {
+  created_at: timestamptz
+  id: String
+  name: String
+  profile: String
+  updated_at: timestamptz
+}
+
+# update columns of table "users"
+enum users_update_column {
+  # column name
+  created_at
+
+  # column name
+  id
+
+  # column name
+  name
+
+  # column name
+  profile
+
+  # column name
+  updated_at
+}
+
+scalar uuid
+
+# expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
+# columns and relationships of "videos"
+type videos {
+  author: String!
+  id: Int!
+  likes: Int!
+  song_name: String!
+  students: Int!
+  title: String!
+  url: String!
+
+  # An object relationship
+  user: users!
+  uuid: uuid
+}
+
+# aggregated selection of "videos"
+type videos_aggregate {
+  aggregate: videos_aggregate_fields
+  nodes: [videos!]!
+}
+
+# aggregate fields of "videos"
+type videos_aggregate_fields {
+  avg: videos_avg_fields
+  count(columns: [videos_select_column!], distinct: Boolean): Int
+  max: videos_max_fields
+  min: videos_min_fields
+  stddev: videos_stddev_fields
+  stddev_pop: videos_stddev_pop_fields
+  stddev_samp: videos_stddev_samp_fields
+  sum: videos_sum_fields
+  var_pop: videos_var_pop_fields
+  var_samp: videos_var_samp_fields
+  variance: videos_variance_fields
+}
+
+# order by aggregate values of table "videos"
+input videos_aggregate_order_by {
+  avg: videos_avg_order_by
+  count: order_by
+  max: videos_max_order_by
+  min: videos_min_order_by
+  stddev: videos_stddev_order_by
+  stddev_pop: videos_stddev_pop_order_by
+  stddev_samp: videos_stddev_samp_order_by
+  sum: videos_sum_order_by
+  var_pop: videos_var_pop_order_by
+  var_samp: videos_var_samp_order_by
+  variance: videos_variance_order_by
+}
+
+# input type for inserting array relation for remote table "videos"
+input videos_arr_rel_insert_input {
+  data: [videos_insert_input!]!
+  on_conflict: videos_on_conflict
+}
+
+# aggregate avg on columns
+type videos_avg_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by avg() on columns of table "videos"
+input videos_avg_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# Boolean expression to filter rows from the table "videos". All fields are combined with a logical 'AND'.
+input videos_bool_exp {
+  _and: [videos_bool_exp]
+  _not: videos_bool_exp
+  _or: [videos_bool_exp]
+  author: String_comparison_exp
+  id: Int_comparison_exp
+  likes: Int_comparison_exp
+  song_name: String_comparison_exp
+  students: Int_comparison_exp
+  title: String_comparison_exp
+  url: String_comparison_exp
+  user: users_bool_exp
+  uuid: uuid_comparison_exp
+}
+
+# unique or primary key constraints on table "videos"
+enum videos_constraint {
+  # unique or primary key constraint
+  videos_pkey
+
+  # unique or primary key constraint
+  videos_song_name_key
+}
+
+# input type for incrementing integer column in table "videos"
+input videos_inc_input {
+  id: Int
+  likes: Int
+  students: Int
+}
+
+# input type for inserting data into table "videos"
+input videos_insert_input {
+  author: String
+  id: Int
+  likes: Int
+  song_name: String
+  students: Int
+  title: String
+  url: String
+  user: users_obj_rel_insert_input
+  uuid: uuid
+}
+
+# aggregate max on columns
+type videos_max_fields {
+  author: String
+  id: Int
+  likes: Int
+  song_name: String
+  students: Int
+  title: String
+  url: String
+  uuid: uuid
+}
+
+# order by max() on columns of table "videos"
+input videos_max_order_by {
+  author: order_by
+  id: order_by
+  likes: order_by
+  song_name: order_by
+  students: order_by
+  title: order_by
+  url: order_by
+  uuid: order_by
+}
+
+# aggregate min on columns
+type videos_min_fields {
+  author: String
+  id: Int
+  likes: Int
+  song_name: String
+  students: Int
+  title: String
+  url: String
+  uuid: uuid
+}
+
+# order by min() on columns of table "videos"
+input videos_min_order_by {
+  author: order_by
+  id: order_by
+  likes: order_by
+  song_name: order_by
+  students: order_by
+  title: order_by
+  url: order_by
+  uuid: order_by
+}
+
+# response of any mutation on the table "videos"
+type videos_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [videos!]!
+}
+
+# input type for inserting object relation for remote table "videos"
+input videos_obj_rel_insert_input {
+  data: videos_insert_input!
+  on_conflict: videos_on_conflict
+}
+
+# on conflict condition type for table "videos"
+input videos_on_conflict {
+  constraint: videos_constraint!
+  update_columns: [videos_update_column!]!
+  where: videos_bool_exp
+}
+
+# ordering options when selecting data from "videos"
+input videos_order_by {
+  author: order_by
+  id: order_by
+  likes: order_by
+  song_name: order_by
+  students: order_by
+  title: order_by
+  url: order_by
+  user: users_order_by
+  uuid: order_by
+}
+
+# primary key columns input for table: "videos"
+input videos_pk_columns_input {
+  id: Int!
+}
+
+# select columns of table "videos"
+enum videos_select_column {
+  # column name
+  author
+
+  # column name
+  id
+
+  # column name
+  likes
+
+  # column name
+  song_name
+
+  # column name
+  students
+
+  # column name
+  title
+
+  # column name
+  url
+
+  # column name
+  uuid
+}
+
+# input type for updating data in table "videos"
+input videos_set_input {
+  author: String
+  id: Int
+  likes: Int
+  song_name: String
+  students: Int
+  title: String
+  url: String
+  uuid: uuid
+}
+
+# aggregate stddev on columns
+type videos_stddev_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by stddev() on columns of table "videos"
+input videos_stddev_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# aggregate stddev_pop on columns
+type videos_stddev_pop_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by stddev_pop() on columns of table "videos"
+input videos_stddev_pop_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# aggregate stddev_samp on columns
+type videos_stddev_samp_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by stddev_samp() on columns of table "videos"
+input videos_stddev_samp_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# aggregate sum on columns
+type videos_sum_fields {
+  id: Int
+  likes: Int
+  students: Int
+}
+
+# order by sum() on columns of table "videos"
+input videos_sum_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# update columns of table "videos"
+enum videos_update_column {
+  # column name
+  author
+
+  # column name
+  id
+
+  # column name
+  likes
+
+  # column name
+  song_name
+
+  # column name
+  students
+
+  # column name
+  title
+
+  # column name
+  url
+
+  # column name
+  uuid
+}
+
+# aggregate var_pop on columns
+type videos_var_pop_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by var_pop() on columns of table "videos"
+input videos_var_pop_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# aggregate var_samp on columns
+type videos_var_samp_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by var_samp() on columns of table "videos"
+input videos_var_samp_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+
+# aggregate variance on columns
+type videos_variance_fields {
+  id: Float
+  likes: Float
+  students: Float
+}
+
+# order by variance() on columns of table "videos"
+input videos_variance_order_by {
+  id: order_by
+  likes: order_by
+  students: order_by
+}
+

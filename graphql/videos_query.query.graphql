@@ -1,0 +1,17 @@
+query VideosData {
+    videos(limit: 10, offset: 0, order_by: {id: desc}) {
+        id
+        title
+        url
+        likes
+        song_name
+        students
+        user {
+            name
+            profile
+        }
+        uuid
+        __typename
+
+    }
+}

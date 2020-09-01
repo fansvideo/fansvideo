@@ -1,0 +1,15 @@
+{
+  "name": "FansVideo GraphQL Schema",
+  "schemaPath": "videos_query.query.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:9002/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

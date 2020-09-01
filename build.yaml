@@ -1,0 +1,16 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - graphql/**
+    builders:
+#      json_serializable:
+      artemis:
+        options:
+          schema_mapping:
+            - schema: graphql/schema/hasura-schema.graphql
+              queries_glob: graphql/*.graphql
+              output: lib/graphql/graphql_api.dart
+          scalar_mapping:
+            - graphql_type: uuid
+              dart_type: String
