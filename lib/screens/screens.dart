@@ -4,3 +4,6 @@ export 'dashboard/dashboard.dart';
 export 'popular_screen/PopularScreen.dart';
 export 'video_demo/video_demo.dart';
 export 'login_screen/login_screen.dart';
+export 'add_screen/add_screen.dart';
+export 'my_screen/my_screen.dart';
+export 'message_screen/message_screen.dart';

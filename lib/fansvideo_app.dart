@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:fansvideo/graphql/fans_graphql_provide.dart';
 import 'package:fansvideo/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:js' as js;
 
 String get host => 'localhost';
 
@@ -11,27 +17,9 @@ class FansVideoApp extends StatefulWidget {
   final screens = [
     HomeScreen(),
     PopularScreen(),
-    Scaffold(
-      body: Center(
-          child: Text(
-        'add',
-        style: TextStyle(color: Colors.white, fontSize: 40),
-      )),
-    ),
-    Scaffold(
-      body: Center(
-          child: Text(
-        'message',
-        style: TextStyle(color: Colors.white, fontSize: 40),
-      )),
-    ),
-    Scaffold(
-      body: Center(
-          child: Text(
-        'profile',
-        style: TextStyle(color: Colors.white, fontSize: 40),
-      )),
-    ),
+    AddScreen(),
+    MessageScreen(),
+    MyScreen(),
   ];
 
   @override
@@ -40,6 +28,7 @@ class FansVideoApp extends StatefulWidget {
 
 class _FansVideoAppState extends State<FansVideoApp> {
   int _selectedIndex;
+  String currentUrl;
   final List<IconData> navs = [
     Icons.home,
     CupertinoIcons.collections,
@@ -52,6 +41,15 @@ class _FansVideoAppState extends State<FansVideoApp> {
   void initState() {
     super.initState();
     _selectedIndex = 0;
+    currentUrl = js.context['location']['href'];
+    print(getIdToken(currentUrl));
+    //刷新token 保存token到本地，使用token获取数据
+  }
+
+  String getIdToken(String callbackUrl) {
+    Uri uri = Uri.parse(callbackUrl.replaceFirst('#', '?'));
+    Map<String, String> qp = uri.queryParameters;
+    return qp['id_token'] ?? '';
   }
 
   @override
@@ -60,11 +58,12 @@ class _FansVideoAppState extends State<FansVideoApp> {
     return FansGraphqlProvider(
 //      uri: 'http://$host:9002/graphql',
       uri: 'https://fansvideo-hasura.herokuapp.com/v1/graphql',
+      subscriptionUri: 'ws://fansvideo-hasura.herokuapp.com/v1/graphql',
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Fans Video',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.pink,
           scaffoldBackgroundColor: Colors.black87,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: Theme.of(context)
@@ -72,6 +71,11 @@ class _FansVideoAppState extends State<FansVideoApp> {
               .apply(bodyColor: Colors.white, displayColor: Colors.white),
           canvasColor: Colors.transparent,
         ),
+        routes: {
+          'login': (_) => LoginScreen(
+                currentUrl: currentUrl,
+              )
+        },
         home: AnnotatedRegion(
           value: SystemUiOverlayStyle.light,
           child: Scaffold(
@@ -136,7 +140,7 @@ class _FansVideoAppState extends State<FansVideoApp> {
                         activeIcon: Icon(navs[4]),
                       ),
                     ],
-                    onTap: (index) => setIndex(index),
+                    onTap: _navigateTo,
                   ),
                 ),
               ],
@@ -147,7 +151,9 @@ class _FansVideoAppState extends State<FansVideoApp> {
     );
   }
 
-  setIndex(int i) {
-    setState(() => _selectedIndex = i);
+  void _navigateTo(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
