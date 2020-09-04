@@ -1,5 +1,4 @@
 import 'package:fansvideo/bloc_auth/bloc.dart';
-import 'package:fansvideo/services/shared_preferences_service.dart';
 import 'package:fansvideo/widgets/blurhash_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,25 +20,35 @@ class HomeScreen extends StatelessWidget {
                 state.when(checkIdToken: () {
                   showView = Center(child: CircularProgressIndicator());
                 }, isLogin: (isLogin, idToken) {
-                  showView = IconButton(
-                    tooltip: isLogin ? '退出' : '登录',
-                    icon: isLogin
-                        ? Icon(
-                            Icons.exit_to_app,
-                            color: Colors.white,
-                          )
-                        : Icon(
-                            CupertinoIcons.profile_circled,
-                            color: Colors.white,
-                          ),
-                    onPressed: () async {
-                      if (isLogin) {
-                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.logOut());
-                      } else {
+                  if (isLogin) {
+                    Map<String, dynamic> decodedToken =
+                        JwtDecoder.decode(idToken);
+                    String profileImg = decodedToken['picture'];
+                    showView = InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      hoverColor: Colors.blue,
+
+                      onTap: () => BlocProvider.of<AuthBloc>(context)
+                          .add(AuthEvent.logOut()),
+                      child: Tooltip(
+                        message: '退出',
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(profileImg),
+                        ),
+                      ),
+                    );
+                  } else {
+                    showView = IconButton(
+                      tooltip: '登录',
+                      icon: Icon(
+                        CupertinoIcons.profile_circled,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
                         Navigator.of(context).pushNamed('login');
-                      }
-                    },
-                  );
+                      },
+                    );
+                  }
                 }, error: () {
                   showView = IconButton(
                     tooltip: '登录',
@@ -79,7 +88,10 @@ class HomeScreen extends StatelessWidget {
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               state.when(
-                  checkIdToken: () {}, isLogin: (_, idToken) {}, error: () {}, logOut: () {  });
+                  checkIdToken: () {},
+                  isLogin: (_, idToken) {},
+                  error: () {},
+                  logOut: () {});
             },
             builder: (context, state) {
               Widget returnView;
@@ -112,7 +124,9 @@ class HomeScreen extends StatelessWidget {
                 }
               }, error: () {
                 returnView = Center(child: Text('出错啦~'));
-              }, logOut: () { returnView = Center(child: Text('未登录~')); });
+              }, logOut: () {
+                returnView = Center(child: Text('未登录~'));
+              });
               return returnView;
             },
           ),
