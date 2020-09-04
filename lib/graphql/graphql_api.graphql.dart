@@ -160,6 +160,12 @@ class VideosDataQuery
                     alias: null,
                     arguments: [],
                     directives: [],
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
                     selectionSet: null)
               ]))
         ]))

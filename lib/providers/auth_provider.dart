@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:fansvideo/models/auth0_info.dart';
+import 'package:fansvideo/services/shared_preferences_service.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
 
-class AuthClient {
+class AuthApiClient {
   final String clientId, redirectUrl, authzEndpoint, tokenEndpoint;
   final List<String> scopes;
   String discoveryUrl;
@@ -24,7 +26,7 @@ class AuthClient {
   ];
   // End default configs
 
-  AuthClient(
+  AuthApiClient(
       {this.authClient,
         this.clientId: _clientId,
         this.redirectUrl: _redirectUrl,
@@ -39,6 +41,14 @@ class AuthClient {
     if (discoveryUrl == null && this.authzEndpoint == null) {
       discoveryUrl = _discoveryUrl;
     }
+  }
+
+  Future<Auth0Info> getAuth0Info() async {
+    await sharedPreferenceService.getSharedPreferencesInstance();
+    var idToken = await sharedPreferenceService.idToken;
+    var accessToken = await sharedPreferenceService.accessToken;
+    var expiresIn = await sharedPreferenceService.expiresIn;
+    return Auth0Info(idToken: idToken, accessToken: accessToken, expiresIn: expiresIn);
   }
 
   Future<dynamic> getUserInfo(accessToken) async {

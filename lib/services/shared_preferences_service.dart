@@ -1,3 +1,4 @@
+import 'package:fansvideo/models/auth0_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceService {
@@ -11,15 +12,25 @@ class SharedPreferenceService {
     return true;
   }
 
-  Future setToken(String token) async {
-    await _prefs.setString('token', token);
+  Future setIdToken(String token) async {
+    await _prefs.setString('id_token', token);
+  }
+
+  Future setAccessToken(String token) async {
+    await _prefs.setString('access_token', token);
+  }
+
+  Future setExpiresIn(int expiresIn) async {
+    await _prefs.setInt('expires_in', expiresIn);
   }
 
   Future clearToken() async {
     await _prefs.clear();
   }
 
-  Future<String> get token async => _prefs.getString('token');
+  Future<String> get idToken async => _prefs.getString('id_token') ?? '';
+  Future<String> get accessToken async => _prefs.getString('access_token');
+  Future<int> get expiresIn async => _prefs.getInt('expires_in');
 }
 
 SharedPreferenceService sharedPreferenceService = SharedPreferenceService();

@@ -1,10 +1,11 @@
-part of 'auth_bloc.dart';
 
-abstract class AuthState extends Equatable {
-  const AuthState();
-}
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class AuthInitial extends AuthState {
-  @override
-  List<Object> get props => [];
+part 'auth_state.freezed.dart';
+
+@freezed
+abstract class AuthState with _$AuthState {
+  const factory AuthState.checkIdToken() = _AuthCheckIdToken;
+  const factory AuthState.isLogin(bool isLogin, String idToken) = _AuthIsLogin;
+  const factory AuthState.error() = _AuthError;
 }

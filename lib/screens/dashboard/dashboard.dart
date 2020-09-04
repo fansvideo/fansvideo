@@ -9,7 +9,7 @@ class DashBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
-      future: sharedPreferenceService.token,
+      future: sharedPreferenceService.idToken,
       builder: (context, snapshot) {
         Widget children = Text('数据服务器出错！');
         if (snapshot.hasError) {

@@ -38,6 +38,8 @@ dependencies:
   analyzer: '0.39.14'
   flutter_appauth: ^0.9.1
   url_launcher: ^5.5.2
+  jwt_decoder: ^1.0.1
+  freezed_annotation:
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +47,7 @@ dev_dependencies:
   artemis: '>=5.0.0 <6.0.0'
   build_runner:
   json_serializable:
+  freezed:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

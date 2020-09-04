@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:fansvideo/bloc_auth/bloc.dart';
 import 'package:fansvideo/graphql/fans_graphql_provide.dart';
+import 'package:fansvideo/repository/auth_repository.dart';
 import 'package:fansvideo/screens/screens.dart';
+import 'package:fansvideo/services/shared_preferences_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,9 +10,13 @@ import 'package:flutter/services.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 String get host => 'localhost';
 
 class FansVideoApp extends StatefulWidget {
+  final AuthRepository authRepository;
+
   // This widget is the root of your application.
   final screens = [
     HomeScreen(),
@@ -21,6 +25,10 @@ class FansVideoApp extends StatefulWidget {
     MessageScreen(),
     MyScreen(),
   ];
+
+  FansVideoApp({Key key, this.authRepository})
+      : assert(authRepository != null),
+        super(key: key);
 
   @override
   _FansVideoAppState createState() => _FansVideoAppState();
@@ -42,14 +50,21 @@ class _FansVideoAppState extends State<FansVideoApp> {
     super.initState();
     _selectedIndex = 0;
     currentUrl = js.context['location']['href'];
-    print(getIdToken(currentUrl));
     //刷新token 保存token到本地，使用token获取数据
+    getIdToken(currentUrl);
   }
 
-  String getIdToken(String callbackUrl) {
+  Future<String> getIdToken(String callbackUrl) async {
     Uri uri = Uri.parse(callbackUrl.replaceFirst('#', '?'));
     Map<String, String> qp = uri.queryParameters;
-    return qp['id_token'] ?? '';
+    var idToken = qp['id_token'] ?? '';
+    if(idToken != '') {
+      await sharedPreferenceService.getSharedPreferencesInstance();
+      sharedPreferenceService.setIdToken(idToken);
+      sharedPreferenceService.setAccessToken(qp['access_token']);
+      sharedPreferenceService.setExpiresIn(int.parse(qp['expires_in']));
+    }
+    return Future.value(idToken);
   }
 
   @override
@@ -74,16 +89,24 @@ class _FansVideoAppState extends State<FansVideoApp> {
         routes: {
           'login': (_) => LoginScreen(
                 currentUrl: currentUrl,
-              )
+              ),
+          'my': (_) => MyScreen(),
         },
-        home: AnnotatedRegion(
-          value: SystemUiOverlayStyle.light,
-          child: Scaffold(
-            body: Stack(
-              children: [
-                Container(
-                  child: widget.screens[_selectedIndex],
-                ),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthBloc(repository: widget.authRepository)
+              ..add(AuthInitialEvent()),
+            )
+          ],
+          child: AnnotatedRegion(
+            value: SystemUiOverlayStyle.light,
+            child: Scaffold(
+              body: Stack(
+                children: [
+                  Container(
+                    child: widget.screens[_selectedIndex],
+                  ),
 //              Container(
 //                decoration: BoxDecoration(
 //                  gradient: LinearGradient(
@@ -100,50 +123,51 @@ class _FansVideoAppState extends State<FansVideoApp> {
 //                  ),
 //                ),
 //              ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: BottomNavigationBar(
-                    type: BottomNavigationBarType.fixed,
-                    iconSize: 32,
-                    fixedColor: Colors.white,
-                    unselectedItemColor: Colors.white54,
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
+                      iconSize: 32,
+                      fixedColor: Colors.white,
+                      unselectedItemColor: Colors.white54,
 //                  showUnselectedLabels: true,
 //                  showSelectedLabels: false,
-                    currentIndex: _selectedIndex,
-                    elevation: 0,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(navs[0]),
-                        title: Text('首页'),
-                        activeIcon: Icon(navs[0]),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(navs[1]),
-                        title: Text('热门'),
-                        activeIcon: Icon(navs[1]),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(navs[2]),
-                        title: Text('上传'),
-                        activeIcon: Icon(navs[2]),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(navs[3]),
-                        title: Text('评论'),
-                        activeIcon: Icon(navs[3]),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(navs[4]),
-                        title: Text('我的'),
-                        activeIcon: Icon(navs[4]),
-                      ),
-                    ],
-                    onTap: _navigateTo,
+                      currentIndex: _selectedIndex,
+                      elevation: 0,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(navs[0]),
+                          title: Text('首页'),
+                          activeIcon: Icon(navs[0]),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(navs[1]),
+                          title: Text('热门'),
+                          activeIcon: Icon(navs[1]),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(navs[2]),
+                          title: Text('上传'),
+                          activeIcon: Icon(navs[2]),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(navs[3]),
+                          title: Text('评论'),
+                          activeIcon: Icon(navs[3]),
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(navs[4]),
+                          title: Text('我的'),
+                          activeIcon: Icon(navs[4]),
+                        ),
+                      ],
+                      onTap: _navigateTo,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

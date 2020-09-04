@@ -1,6 +1,9 @@
-part of 'auth_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class AuthEvent extends Equatable {
-  const AuthEvent();
+part 'auth_event.freezed.dart';
+
+@freezed
+abstract class AuthEvent with _$AuthEvent{
+  const factory AuthEvent.initial() = AuthInitialEvent;
+  const factory AuthEvent.logOut() = AuthLogOutEvent;
 }
-
