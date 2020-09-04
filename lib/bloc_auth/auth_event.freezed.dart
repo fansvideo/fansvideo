@@ -16,6 +16,11 @@ class _$AuthEventTearOff {
   AuthInitialEvent initial() {
     return const AuthInitialEvent();
   }
+
+// ignore: unused_element
+  AuthLogOutEvent logOut() {
+    return const AuthLogOutEvent();
+  }
 }
 
 // ignore: unused_element
@@ -25,19 +30,23 @@ mixin _$AuthEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result logOut(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result logOut(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(AuthInitialEvent value),
+    @required Result logOut(AuthLogOutEvent value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(AuthInitialEvent value),
+    Result logOut(AuthLogOutEvent value),
     @required Result orElse(),
   });
 }
@@ -91,8 +100,10 @@ class _$AuthInitialEvent implements AuthInitialEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
+    @required Result logOut(),
   }) {
     assert(initial != null);
+    assert(logOut != null);
     return initial();
   }
 
@@ -100,6 +111,7 @@ class _$AuthInitialEvent implements AuthInitialEvent {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
+    Result logOut(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -113,8 +125,10 @@ class _$AuthInitialEvent implements AuthInitialEvent {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initial(AuthInitialEvent value),
+    @required Result logOut(AuthLogOutEvent value),
   }) {
     assert(initial != null);
+    assert(logOut != null);
     return initial(this);
   }
 
@@ -122,6 +136,7 @@ class _$AuthInitialEvent implements AuthInitialEvent {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initial(AuthInitialEvent value),
+    Result logOut(AuthLogOutEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -134,4 +149,91 @@ class _$AuthInitialEvent implements AuthInitialEvent {
 
 abstract class AuthInitialEvent implements AuthEvent {
   const factory AuthInitialEvent() = _$AuthInitialEvent;
+}
+
+abstract class $AuthLogOutEventCopyWith<$Res> {
+  factory $AuthLogOutEventCopyWith(
+          AuthLogOutEvent value, $Res Function(AuthLogOutEvent) then) =
+      _$AuthLogOutEventCopyWithImpl<$Res>;
+}
+
+class _$AuthLogOutEventCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements $AuthLogOutEventCopyWith<$Res> {
+  _$AuthLogOutEventCopyWithImpl(
+      AuthLogOutEvent _value, $Res Function(AuthLogOutEvent) _then)
+      : super(_value, (v) => _then(v as AuthLogOutEvent));
+
+  @override
+  AuthLogOutEvent get _value => super._value as AuthLogOutEvent;
+}
+
+class _$AuthLogOutEvent implements AuthLogOutEvent {
+  const _$AuthLogOutEvent();
+
+  @override
+  String toString() {
+    return 'AuthEvent.logOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is AuthLogOutEvent);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result logOut(),
+  }) {
+    assert(initial != null);
+    assert(logOut != null);
+    return logOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result logOut(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (logOut != null) {
+      return logOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(AuthInitialEvent value),
+    @required Result logOut(AuthLogOutEvent value),
+  }) {
+    assert(initial != null);
+    assert(logOut != null);
+    return logOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(AuthInitialEvent value),
+    Result logOut(AuthLogOutEvent value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (logOut != null) {
+      return logOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AuthLogOutEvent implements AuthEvent {
+  const factory AuthLogOutEvent() = _$AuthLogOutEvent;
 }

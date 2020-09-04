@@ -7,5 +7,6 @@ part 'auth_state.freezed.dart';
 abstract class AuthState with _$AuthState {
   const factory AuthState.checkIdToken() = _AuthCheckIdToken;
   const factory AuthState.isLogin(bool isLogin, String idToken) = _AuthIsLogin;
+  const factory AuthState.logOut() = _AuthLogout;
   const factory AuthState.error() = _AuthError;
 }

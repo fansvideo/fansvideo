@@ -34,13 +34,24 @@ class HomeScreen extends StatelessWidget {
                           ),
                     onPressed: () async {
                       if (isLogin) {
-                        await sharedPreferenceService.clearToken();
+                        BlocProvider.of<AuthBloc>(context).add(AuthEvent.logOut());
                       } else {
                         Navigator.of(context).pushNamed('login');
                       }
                     },
                   );
                 }, error: () {
+                  showView = IconButton(
+                    tooltip: '登录',
+                    icon: Icon(
+                      CupertinoIcons.profile_circled,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('login');
+                    },
+                  );
+                }, logOut: () {
                   showView = IconButton(
                     tooltip: '登录',
                     icon: Icon(
@@ -68,7 +79,7 @@ class HomeScreen extends StatelessWidget {
           BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               state.when(
-                  checkIdToken: () {}, isLogin: (_, idToken) {}, error: () {});
+                  checkIdToken: () {}, isLogin: (_, idToken) {}, error: () {}, logOut: () {  });
             },
             builder: (context, state) {
               Widget returnView;
@@ -101,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 }
               }, error: () {
                 returnView = Center(child: Text('出错啦~'));
-              });
+              }, logOut: () { returnView = Center(child: Text('未登录~')); });
               return returnView;
             },
           ),

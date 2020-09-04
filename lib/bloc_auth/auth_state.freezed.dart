@@ -26,6 +26,11 @@ class _$AuthStateTearOff {
   }
 
 // ignore: unused_element
+  _AuthLogout logOut() {
+    return const _AuthLogout();
+  }
+
+// ignore: unused_element
   _AuthError error() {
     return const _AuthError();
   }
@@ -39,12 +44,14 @@ mixin _$AuthState {
   Result when<Result extends Object>({
     @required Result checkIdToken(),
     @required Result isLogin(bool isLogin, String idToken),
+    @required Result logOut(),
     @required Result error(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result checkIdToken(),
     Result isLogin(bool isLogin, String idToken),
+    Result logOut(),
     Result error(),
     @required Result orElse(),
   });
@@ -52,12 +59,14 @@ mixin _$AuthState {
   Result map<Result extends Object>({
     @required Result checkIdToken(_AuthCheckIdToken value),
     @required Result isLogin(_AuthIsLogin value),
+    @required Result logOut(_AuthLogout value),
     @required Result error(_AuthError value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result checkIdToken(_AuthCheckIdToken value),
     Result isLogin(_AuthIsLogin value),
+    Result logOut(_AuthLogout value),
     Result error(_AuthError value),
     @required Result orElse(),
   });
@@ -114,10 +123,12 @@ class _$_AuthCheckIdToken implements _AuthCheckIdToken {
   Result when<Result extends Object>({
     @required Result checkIdToken(),
     @required Result isLogin(bool isLogin, String idToken),
+    @required Result logOut(),
     @required Result error(),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return checkIdToken();
   }
@@ -127,6 +138,7 @@ class _$_AuthCheckIdToken implements _AuthCheckIdToken {
   Result maybeWhen<Result extends Object>({
     Result checkIdToken(),
     Result isLogin(bool isLogin, String idToken),
+    Result logOut(),
     Result error(),
     @required Result orElse(),
   }) {
@@ -142,10 +154,12 @@ class _$_AuthCheckIdToken implements _AuthCheckIdToken {
   Result map<Result extends Object>({
     @required Result checkIdToken(_AuthCheckIdToken value),
     @required Result isLogin(_AuthIsLogin value),
+    @required Result logOut(_AuthLogout value),
     @required Result error(_AuthError value),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return checkIdToken(this);
   }
@@ -155,6 +169,7 @@ class _$_AuthCheckIdToken implements _AuthCheckIdToken {
   Result maybeMap<Result extends Object>({
     Result checkIdToken(_AuthCheckIdToken value),
     Result isLogin(_AuthIsLogin value),
+    Result logOut(_AuthLogout value),
     Result error(_AuthError value),
     @required Result orElse(),
   }) {
@@ -239,10 +254,12 @@ class _$_AuthIsLogin implements _AuthIsLogin {
   Result when<Result extends Object>({
     @required Result checkIdToken(),
     @required Result isLogin(bool isLogin, String idToken),
+    @required Result logOut(),
     @required Result error(),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return isLogin(this.isLogin, idToken);
   }
@@ -252,6 +269,7 @@ class _$_AuthIsLogin implements _AuthIsLogin {
   Result maybeWhen<Result extends Object>({
     Result checkIdToken(),
     Result isLogin(bool isLogin, String idToken),
+    Result logOut(),
     Result error(),
     @required Result orElse(),
   }) {
@@ -267,10 +285,12 @@ class _$_AuthIsLogin implements _AuthIsLogin {
   Result map<Result extends Object>({
     @required Result checkIdToken(_AuthCheckIdToken value),
     @required Result isLogin(_AuthIsLogin value),
+    @required Result logOut(_AuthLogout value),
     @required Result error(_AuthError value),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return isLogin(this);
   }
@@ -280,6 +300,7 @@ class _$_AuthIsLogin implements _AuthIsLogin {
   Result maybeMap<Result extends Object>({
     Result checkIdToken(_AuthCheckIdToken value),
     Result isLogin(_AuthIsLogin value),
+    Result logOut(_AuthLogout value),
     Result error(_AuthError value),
     @required Result orElse(),
   }) {
@@ -297,6 +318,105 @@ abstract class _AuthIsLogin implements AuthState {
   bool get isLogin;
   String get idToken;
   _$AuthIsLoginCopyWith<_AuthIsLogin> get copyWith;
+}
+
+abstract class _$AuthLogoutCopyWith<$Res> {
+  factory _$AuthLogoutCopyWith(
+          _AuthLogout value, $Res Function(_AuthLogout) then) =
+      __$AuthLogoutCopyWithImpl<$Res>;
+}
+
+class __$AuthLogoutCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$AuthLogoutCopyWith<$Res> {
+  __$AuthLogoutCopyWithImpl(
+      _AuthLogout _value, $Res Function(_AuthLogout) _then)
+      : super(_value, (v) => _then(v as _AuthLogout));
+
+  @override
+  _AuthLogout get _value => super._value as _AuthLogout;
+}
+
+class _$_AuthLogout implements _AuthLogout {
+  const _$_AuthLogout();
+
+  @override
+  String toString() {
+    return 'AuthState.logOut()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _AuthLogout);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result checkIdToken(),
+    @required Result isLogin(bool isLogin, String idToken),
+    @required Result logOut(),
+    @required Result error(),
+  }) {
+    assert(checkIdToken != null);
+    assert(isLogin != null);
+    assert(logOut != null);
+    assert(error != null);
+    return logOut();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result checkIdToken(),
+    Result isLogin(bool isLogin, String idToken),
+    Result logOut(),
+    Result error(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (logOut != null) {
+      return logOut();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result checkIdToken(_AuthCheckIdToken value),
+    @required Result isLogin(_AuthIsLogin value),
+    @required Result logOut(_AuthLogout value),
+    @required Result error(_AuthError value),
+  }) {
+    assert(checkIdToken != null);
+    assert(isLogin != null);
+    assert(logOut != null);
+    assert(error != null);
+    return logOut(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result checkIdToken(_AuthCheckIdToken value),
+    Result isLogin(_AuthIsLogin value),
+    Result logOut(_AuthLogout value),
+    Result error(_AuthError value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (logOut != null) {
+      return logOut(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AuthLogout implements AuthState {
+  const factory _AuthLogout() = _$_AuthLogout;
 }
 
 abstract class _$AuthErrorCopyWith<$Res> {
@@ -335,10 +455,12 @@ class _$_AuthError implements _AuthError {
   Result when<Result extends Object>({
     @required Result checkIdToken(),
     @required Result isLogin(bool isLogin, String idToken),
+    @required Result logOut(),
     @required Result error(),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return error();
   }
@@ -348,6 +470,7 @@ class _$_AuthError implements _AuthError {
   Result maybeWhen<Result extends Object>({
     Result checkIdToken(),
     Result isLogin(bool isLogin, String idToken),
+    Result logOut(),
     Result error(),
     @required Result orElse(),
   }) {
@@ -363,10 +486,12 @@ class _$_AuthError implements _AuthError {
   Result map<Result extends Object>({
     @required Result checkIdToken(_AuthCheckIdToken value),
     @required Result isLogin(_AuthIsLogin value),
+    @required Result logOut(_AuthLogout value),
     @required Result error(_AuthError value),
   }) {
     assert(checkIdToken != null);
     assert(isLogin != null);
+    assert(logOut != null);
     assert(error != null);
     return error(this);
   }
@@ -376,6 +501,7 @@ class _$_AuthError implements _AuthError {
   Result maybeMap<Result extends Object>({
     Result checkIdToken(_AuthCheckIdToken value),
     Result isLogin(_AuthIsLogin value),
+    Result logOut(_AuthLogout value),
     Result error(_AuthError value),
     @required Result orElse(),
   }) {
