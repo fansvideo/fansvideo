@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:fansvideo/bloc_auth/bloc.dart';
+import 'package:fansvideo/blocs/bloc_auth/bloc.dart';
 import 'package:fansvideo/models/auth0_info.dart';
 import 'package:fansvideo/repository/auth_repository.dart';
 import 'package:fansvideo/services/shared_preferences_service.dart';
