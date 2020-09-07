@@ -41,6 +41,7 @@ dependencies:
   jwt_decoder: ^1.0.1
   responsive_builder: ^0.3.0
   freezed_annotation:
+  inview_notifier_list: ^1.0.0
 
 dev_dependencies:
   flutter_test:

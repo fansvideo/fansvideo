@@ -1,14 +1,17 @@
 import 'package:fansvideo/blocs/bloc_auth/bloc.dart';
 import 'package:fansvideo/blocs/cubits/cubits.dart';
+import 'package:fansvideo/screens/home/sections/sections.dart';
+import 'package:fansvideo/screens/home/widgets/top_banner.dart';
+import 'package:fansvideo/utils/constants.dart';
 import 'package:fansvideo/widgets/blurhash_image.dart';
 import 'package:fansvideo/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({Key key}) : super(key: key);
 
   @override
@@ -16,138 +19,128 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  double progression = 0;
+
+  void onStarted() => print('Ready.');
+
+  var _homeSections = [
+    {
+      "title": "top_section",
+      "section": TopSection()
+    }
+  ];
+
+  var homeSections = [
+    TopSection(),
+    Container(
+      height: 1000,
+      color: Colors.blue.withAlpha(90),
+    ),
+    Container(
+      height: 1000,
+      color: Colors.green.withAlpha(90),
+    ),
+    Container(
+      height: 1000,
+      color: Colors.pink.withAlpha(90),
+    ),
+    Container(
+      height: 1000,
+      color: Colors.green.withAlpha(90),
+    ),
+    Container(
+      height: 1000,
+      color: Colors.black87.withAlpha(90),
+    ),
+    Container(
+      height: 1000,
+      color: Colors.blue.withAlpha(90),
+    ),
+  ];
+
+  double norm(double value, double min, double max) =>
+      (value - min) / (max - min);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    Widget showView;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 60),
-        child: BlocBuilder<AppBarCubit, double>(builder: (context, scrollOffset) {
-          return FansAppBar();
-        },),
+        child: BlocBuilder<AppBarCubit, double>(
+          builder: (context, scrollOffset) {
+            return FansAppBar();
+          },
+        ),
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: FansBlurHashImage(
-              hash: "LEHV6nWB2yk8pyoJadR*.7kCMdnj",
+      body: NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification notification) {
+            // NO need to setState
+            BlocProvider.of<AppBarCubit>(context)
+                .setOffset(notification.metrics.pixels);
+            setState(() {
+              progression = norm(notification.metrics.pixels, 0, 1);
+            });
+            return true;
+          },
+          child: Stack(children: [
+            FractionallySizedBox(
+              heightFactor: topMark,
+              child: TopBanner(
+                bannerUrl: 'images/banner/banner01.jpg',
+                bannerHash: r'LEIX56zm8_~Xx@x[?aoHsj-:tSE2',
+              ),
             ),
-          ),
-          BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-            },
-            builder: (context, state) {
-              Widget returnView;
-              state.when(checkIdToken: () {
-                returnView = Center(child: CircularProgressIndicator());
-              }, isLogin: (isLogin, idToken) {
-                Map<String, dynamic> decodedToken = JwtDecoder.decode(idToken);
-                if (decodedToken != null) {
-                  String profileImg = decodedToken['picture'];
-                  String nickName = decodedToken['nickname'];
-                  returnView = Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        width: 50,
-                        image: NetworkImage(profileImg),
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text('欢迎回来，$nickName'),
-                    ],
-                  ));
-                } else {
-                  returnView = Center(
-                    child: Text('请点击右上角登录!'),
-                  );
-                }
-              }, error: () {
-                returnView = Center(child: Text('出错啦~'));
-              }, logOut: () {
-                returnView = Center(child: Text('未登录~'));
-              });
-              return returnView;
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/*
-AppBar(
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) {
-                state.when(checkIdToken: () {
-                  showView = Center(child: CircularProgressIndicator());
-                }, isLogin: (isLogin, idToken) {
-                  if (isLogin) {
-                    Map<String, dynamic> decodedToken =
-                        JwtDecoder.decode(idToken);
-                    String profileImg = decodedToken['picture'];
-                    showView = InkWell(
-                      borderRadius: BorderRadius.circular(25),
-                      hoverColor: Colors.blue,
-
-                      onTap: () => BlocProvider.of<AuthBloc>(context)
-                          .add(AuthEvent.logOut()),
-                      child: Tooltip(
-                        message: '退出',
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(profileImg),
-                        ),
-                      ),
-                    );
-                  } else {
-                    showView = IconButton(
-                      tooltip: '登录',
-                      icon: Icon(
-                        CupertinoIcons.profile_circled,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        Navigator.of(context).pushNamed('login');
-                      },
-                    );
-                  }
-                }, error: () {
-                  showView = IconButton(
-                    tooltip: '登录',
-                    icon: Icon(
-                      CupertinoIcons.profile_circled,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('login');
-                    },
-                  );
-                }, logOut: () {
-                  showView = IconButton(
-                    tooltip: '登录',
-                    icon: Icon(
-                      CupertinoIcons.profile_circled,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('login');
-                    },
-                  );
-                });
-                return showView;
+//            BackdropFilter(child: , filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15)),
+            InViewNotifierList(
+              itemCount: homeSections.length,
+              builder: (context, index) => InViewNotifierWidget(
+                builder: (BuildContext context, bool isInView, Widget child) {
+                  return homeSections[index];
+                },
+                id: index.toString(),
+              ),
+              isInViewPortCondition: (double deltaTop, double deltaBottom,
+                  double viewPortDimension) {
+                return deltaTop < (topMark * viewPortDimension);
               },
             ),
-          )
-        ],
-      )
- */
+
+//            buildInViewNotifierList()
+          ])),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Widget buildInViewNotifierList() => InViewNotifierList(
+      itemCount: entries.length + 2,
+      builder: (ctx, idx) => InViewNotifierWidget(
+          id: '$idx',
+          builder: (BuildContext context, bool isInView, Widget child) {
+            if (idx == 0) return SizedBox(height: 500);
+            if (idx == entries.length + 1) return SizedBox(height: 800);
+
+            return buildEntry(isInView, idx - 1);
+          }),
+      isInViewPortCondition:
+          (double deltaTop, double deltaBottom, double viewPortDimension) =>
+              deltaTop < (topMark * viewPortDimension)
+      //&& deltaBottom > (0.3 * viewPortDimension)
+      );
+
+  Container buildEntry(bool isInView, int idx) => Container(
+      padding: EdgeInsets.only(left: 0, right: 200),
+      height: 510,
+      margin: const EdgeInsets.only(bottom: 24),
+      child: isInView || idx == 0
+          ? SynchronizedDisplay(
+              hash: entries[idx][0],
+              uri: entries[idx][1],
+              title: entries[idx][2])
+          : BlurHash(hash: entries[idx][0]));
+}

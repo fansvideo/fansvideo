@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:fansvideo/blocs/bloc_auth/bloc.dart';
+import 'package:fansvideo/blocs/cubits/cubits.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,20 +9,20 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class FansAppBar extends StatelessWidget {
-  final double scrollOffset;
-
-  const FansAppBar({Key key, this.scrollOffset = 0}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      color:
-          Colors.white.withOpacity((scrollOffset / 350).clamp(0, 1).toDouble()),
-      child: ScreenTypeLayout(
-        mobile: _FansAppBarMobile(),
-        desktop: _FansAppBarDesktop(),
-      ),
+    return BlocBuilder<AppBarCubit, double>(
+      builder: (BuildContext context, state) {
+        return Container(
+          height: 60,
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+          color: Colors.white.withOpacity((state / 350).clamp(0, 1).toDouble()),
+          child: ScreenTypeLayout(
+            mobile: _FansAppBarMobile(),
+            desktop: _FansAppBarDesktop(),
+          ),
+        );
+      },
     );
   }
 }
@@ -58,7 +61,21 @@ class __FansAppBarDesktopState extends State<_FansAppBarDesktop> {
     return SafeArea(
       child: Row(
         children: [
-          Image.asset('assets/images/fansvideo.png'),
+          BlocBuilder<AppBarCubit, double>(builder: (context, _offset) {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+//                color: _offset < 250
+//                    ? Colors.black87.withOpacity(.7)
+//                    : Colors.transparent,
+                child: Image.asset(
+          'assets/images/fansvideo.png',
+          color: _offset < 250
+                ? Colors.pink//Color(0xFFFB432B)
+                : Colors.pink
+                    .withOpacity((_offset / 350).clamp(0.5, 1).toDouble()),
+                ),
+              );
+            }),
           SizedBox(
             width: 40,
           ),
@@ -108,18 +125,22 @@ class __FansAppBarDesktopState extends State<_FansAppBarDesktop> {
                     maxLines: 1,
                     controller: searchController,
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 22, left: 10),
+                      contentPadding: EdgeInsets.only(left: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: BorderSide(color: Colors.pinkAccent),
                       ),
                       hintText: '搜索课程',
-//                      contentPadding:
-//                          EdgeInsets.only(top: 20, left: 10, right: 10),
-                      suffixIcon: Icon(
-                        CupertinoIcons.search,
-                        color: Colors.pinkAccent,
-                      ),
+                      suffixIcon: BlocBuilder<AppBarCubit, double>(
+                          builder: (context, _offset) {
+                        return Icon(
+                          CupertinoIcons.search,
+                          color: _offset < 250
+                              ? Colors.black87
+                              : Colors.pink.withOpacity(
+                                  (_offset / 350).clamp(0.5, 1).toDouble()),
+                        );
+                      }),
                       hintStyle: TextStyle(fontSize: 10),
                       filled: true,
                       fillColor: Colors.transparent,
@@ -162,6 +183,7 @@ class __FansAppBarDesktopState extends State<_FansAppBarDesktop> {
                             child: Icon(
                               CupertinoIcons.profile_circled,
                               size: 40,
+                              color: Colors.white54
                             ),
                           ),
                         );
@@ -229,11 +251,18 @@ class _AppBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Text(
-        title,
-        style: TextStyle(
-            color: Colors.pink, fontSize: 16, fontWeight: FontWeight.bold),
-      ),
+      child: BlocBuilder<AppBarCubit, double>(builder: (context, _offset) {
+        return Text(
+          title,
+          style: TextStyle(
+              color: _offset < 250
+                  ? Colors.white
+                  : Colors.pink
+                      .withOpacity((_offset / 350).clamp(0.5, 1).toDouble()),
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+        );
+      }),
     );
   }
 }

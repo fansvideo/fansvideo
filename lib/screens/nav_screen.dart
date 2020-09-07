@@ -49,7 +49,7 @@ class _NavScreenState extends State<NavScreen> {
         hasBottomNav = false;
         break;
       case DeviceScreenType.tablet:
-        hasBottomNav = false;
+        hasBottomNav = true;
         break;
       case DeviceScreenType.mobile:
         hasBottomNav = true;
