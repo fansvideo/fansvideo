@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
             FractionallySizedBox(
               heightFactor: topMark,
               child: TopBanner(
-                bannerUrl: 'images/banner/banner01.jpg',
+                bannerUrl: 'assets/images/banner/banner01.jpg',
                 bannerHash: r'LEIX56zm8_~Xx@x[?aoHsj-:tSE2',
               ),
             ),
