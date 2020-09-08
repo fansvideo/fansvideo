@@ -1,5 +1,6 @@
 import 'package:fansvideo/blocs/bloc_auth/bloc.dart';
 import 'package:fansvideo/blocs/cubits/cubits.dart';
+import 'package:fansvideo/blocs/cubits/home_sections/home_sections_cubit.dart';
 import 'package:fansvideo/screens/home/sections/sections.dart';
 import 'package:fansvideo/screens/home/widgets/top_banner.dart';
 import 'package:fansvideo/utils/constants.dart';
@@ -24,38 +25,23 @@ class _HomeScreenState extends State<HomeScreen> {
   void onStarted() => print('Ready.');
 
   var _homeSections = [
-    {
-      "title": "top_section",
-      "section": TopSection()
-    }
+    {"title": "top_section", "section": TopSection()}
   ];
 
   var homeSections = [
     TopSection(),
-    Container(
-      height: 1000,
-      color: Colors.blue.withAlpha(90),
-    ),
-    Container(
-      height: 1000,
-      color: Colors.green.withAlpha(90),
-    ),
-    Container(
-      height: 1000,
-      color: Colors.pink.withAlpha(90),
-    ),
-    Container(
-      height: 1000,
-      color: Colors.green.withAlpha(90),
-    ),
-    Container(
-      height: 1000,
-      color: Colors.black87.withAlpha(90),
-    ),
-    Container(
-      height: 1000,
-      color: Colors.blue.withAlpha(90),
-    ),
+    HashSection(title: 'hash01', color: Colors.blue),
+    HashSection(title: 'hash02', color: Colors.green),
+    HashSection(title: 'hash03', color: Colors.pink),
+    HashSection(title: 'hash04', color: Colors.green),
+    HashSection(title: 'hash05', color: Colors.black87),
+    HashSection(title: 'hash06', color: Colors.blue),
+    HashSection(title: 'hash07', color: Colors.blue),
+    HashSection(title: 'hash08', color: Colors.green),
+    HashSection(title: 'hash09', color: Colors.pink),
+    HashSection(title: 'hash10', color: Colors.green),
+    HashSection(title: 'hash11', color: Colors.black87),
+    HashSection(title: 'hash12', color: Colors.blue),
   ];
 
   double norm(double value, double min, double max) =>
@@ -75,15 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification notification) {
-            // NO need to setState
-            BlocProvider.of<AppBarCubit>(context)
-                .setOffset(notification.metrics.pixels);
-            setState(() {
-              progression = norm(notification.metrics.pixels, 0, 1);
-            });
-            return true;
-          },
+        onNotification: (ScrollNotification notification) {
+          // NO need to setState
+          BlocProvider.of<AppBarCubit>(context)
+              .setOffset(notification.metrics.pixels);
+          setState(() {
+            progression = norm(notification.metrics.pixels, 0, 1);
+          });
+          return true;
+        },
+        child: BlocProvider(
+          create: (_) => HomeSections(),
           child: Stack(children: [
             FractionallySizedBox(
               heightFactor: topMark,
@@ -97,50 +85,24 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: homeSections.length,
               builder: (context, index) => InViewNotifierWidget(
                 builder: (BuildContext context, bool isInView, Widget child) {
+                  if (isInView) {
+                    BlocProvider.of<HomeSections>(context)
+                        .setSection('hash${index.toString().padLeft(2, '0')}');
+                  }
                   return homeSections[index];
                 },
                 id: index.toString(),
               ),
               isInViewPortCondition: (double deltaTop, double deltaBottom,
                   double viewPortDimension) {
-                return deltaTop < (topMark * viewPortDimension);
+                return deltaTop < (topMark/2 * viewPortDimension);
               },
             ),
 
 //            buildInViewNotifierList()
-          ])),
+          ]),
+        ),
+      ),
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  Widget buildInViewNotifierList() => InViewNotifierList(
-      itemCount: entries.length + 2,
-      builder: (ctx, idx) => InViewNotifierWidget(
-          id: '$idx',
-          builder: (BuildContext context, bool isInView, Widget child) {
-            if (idx == 0) return SizedBox(height: 500);
-            if (idx == entries.length + 1) return SizedBox(height: 800);
-
-            return buildEntry(isInView, idx - 1);
-          }),
-      isInViewPortCondition:
-          (double deltaTop, double deltaBottom, double viewPortDimension) =>
-              deltaTop < (topMark * viewPortDimension)
-      //&& deltaBottom > (0.3 * viewPortDimension)
-      );
-
-  Container buildEntry(bool isInView, int idx) => Container(
-      padding: EdgeInsets.only(left: 0, right: 200),
-      height: 510,
-      margin: const EdgeInsets.only(bottom: 24),
-      child: isInView || idx == 0
-          ? SynchronizedDisplay(
-              hash: entries[idx][0],
-              uri: entries[idx][1],
-              title: entries[idx][2])
-          : BlurHash(hash: entries[idx][0]));
 }

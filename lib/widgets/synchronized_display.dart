@@ -1,15 +1,12 @@
-import 'dart:math';
-
 import 'package:fansvideo/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
 class SynchronizedDisplay extends StatefulWidget {
-  const SynchronizedDisplay({Key key, this.hash, this.uri, this.title})
+  const SynchronizedDisplay({Key key, this.hash, this.uri})
       : super(key: key);
   final String hash;
   final String uri;
-  final String title;
 
   @override
   _SynchronizedDisplayState createState() => _SynchronizedDisplayState();
@@ -50,25 +47,6 @@ class _SynchronizedDisplayState extends State<SynchronizedDisplay>
           image: widget.uri,
           duration: duration,
         ),
-        Align(
-          alignment: Alignment(1.4, 0),
-          child: Icon(
-            Icons.chevron_right,
-            size: 60,
-            color: Colors.white,
-          ),
-        ),
-        Transform.rotate(
-          angle: pi * -.5,
-          child: Text(
-            widget.title,
-            style: TextStyle(
-                    color: const Color(0xFFDDDDDD),
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none),
-          ),
-        )
       ],
     );
   }

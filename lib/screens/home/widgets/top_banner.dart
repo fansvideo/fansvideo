@@ -1,4 +1,5 @@
 import 'package:fansvideo/widgets/blurhash_image.dart';
+import 'package:fansvideo/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -41,23 +42,21 @@ class _TopBannerDesktop extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        FansBlurHashImage(
+        SynchronizedDisplay(
           hash: hash,
+          uri: url,
         ),
         Container(
           height: size.height,
-          child: Image.asset(url, fit: BoxFit.cover,),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.black87, Colors.black45, Colors.transparent],
+              stops: [0, .1, 1],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            ),
+          ),
         ),
-//        Container(
-//          height: 500.0,
-//          decoration: const BoxDecoration(
-//            gradient: LinearGradient(
-//              colors: [Colors.black, Colors.transparent],
-//              begin: Alignment.bottomCenter,
-//              end: Alignment.topCenter,
-//            ),
-//          ),
-//        ),
       ],
     );
   }

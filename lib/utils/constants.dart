@@ -24,7 +24,7 @@ const entries = [
   ],
 ];
 
-const duration = Duration(milliseconds: 500);
+const duration = Duration(milliseconds: 300);
 
 const radius = Radius.circular(16);
 
