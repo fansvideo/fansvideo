@@ -46,12 +46,7 @@ class _TopBannerDesktop extends StatelessWidget {
         ),
         Container(
           height: size.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(url),
-              fit: BoxFit.cover,
-            ),
-          ),
+          child: Image.asset(url, fit: BoxFit.cover,),
         ),
 //        Container(
 //          height: 500.0,
