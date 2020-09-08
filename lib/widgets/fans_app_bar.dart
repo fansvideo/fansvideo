@@ -13,13 +13,18 @@ class FansAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBarCubit, double>(
       builder: (BuildContext context, state) {
-        return Container(
-          height: 60,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-          color: Colors.white.withOpacity((state / 350).clamp(0, 1).toDouble()),
-          child: ScreenTypeLayout(
-            mobile: _FansAppBarMobile(),
-            desktop: _FansAppBarDesktop(),
+        return ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: (state / 350).clamp(0, 10).toDouble(), sigmaY: (state / 350).clamp(0, 10).toDouble()),
+            child: Container(
+              height: 60,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+              color: Colors.white.withOpacity((state / 350).clamp(0, .9).toDouble()),
+              child: ScreenTypeLayout(
+                mobile: _FansAppBarMobile(),
+                desktop: _FansAppBarDesktop(),
+              ),
+            ),
           ),
         );
       },
@@ -72,7 +77,7 @@ class __FansAppBarDesktopState extends State<_FansAppBarDesktop> {
           color: _offset < 250
                 ? Colors.pink//Color(0xFFFB432B)
                 : Colors.pink
-                    .withOpacity((_offset / 350).clamp(0.5, 1).toDouble()),
+                    .withOpacity((_offset / 350).clamp(0.5, .8).toDouble()),
                 ),
               );
             }),

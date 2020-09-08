@@ -42,3 +42,7 @@ const banners = """
     }
   }
 """;
+
+const Color weChatColor = Color(0xff7ED444);
+const Color aliPayColor = Color(0xff217BFB);
+const Color weiboColor = Color(0xffE41C34);
