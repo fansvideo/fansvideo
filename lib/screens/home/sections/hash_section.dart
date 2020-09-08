@@ -1,5 +1,6 @@
 import 'package:fansvideo/blocs/cubits/cubits.dart';
 import 'package:fansvideo/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -15,6 +16,7 @@ class HashSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    String releaseUrl = kIsWeb ? "assets/assets/images/banner/banner02.jpg" : 'assets/images/banner/banner02.jpg';
     return Stack(
         children: [
           Container(
@@ -32,7 +34,7 @@ class HashSection extends StatelessWidget {
                 builder: (BuildContext context, state) {
                   return state == title ? SynchronizedDisplay(
                     hash: r'LEIX56zm8_~Xx@x[?aoHsj-:tSE2',
-                    uri: 'assets/images/banner/banner02.jpg',
+                    uri: releaseUrl,
                   ) : Container();
                 },
               ),

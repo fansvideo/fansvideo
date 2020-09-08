@@ -259,7 +259,7 @@ class _AppBarButton extends StatelessWidget {
                   ? Colors.white
                   : Colors.pink
                       .withOpacity((_offset / 350).clamp(0.5, 1).toDouble()),
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold),
         );
       }),

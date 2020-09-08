@@ -1,5 +1,6 @@
 import 'package:fansvideo/widgets/blurhash_image.dart';
 import 'package:fansvideo/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -39,12 +40,13 @@ class _TopBannerDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    String releaseUrl = kIsWeb ? "assets/$url" : url;
     return Stack(
       alignment: Alignment.center,
       children: [
         SynchronizedDisplay(
           hash: hash,
-          uri: url,
+          uri: releaseUrl,
         ),
         Container(
           height: size.height,
