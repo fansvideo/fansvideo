@@ -8,4 +8,5 @@ class AuthRepository {
   AuthRepository({@required this.apiClient}) : assert(apiClient != null);
 
   Future<Auth0Info> getAuth0Info() async => await apiClient.getAuth0Info();
+  Future<void> logOut() async => await apiClient.authLogout();
 }

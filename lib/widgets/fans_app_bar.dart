@@ -169,7 +169,7 @@ class __FansAppBarDesktopState extends State<_FansAppBarDesktop> {
                         userProfile = Tooltip(
                           message: "退出",
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
                               BlocProvider.of<AuthBloc>(context)
                                   .add(AuthEvent.logOut());
                             },

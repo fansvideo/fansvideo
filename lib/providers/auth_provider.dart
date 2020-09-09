@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:fansvideo/models/auth0_info.dart';
 import 'package:fansvideo/services/shared_preferences_service.dart';
+import 'package:fansvideo/utils/utils.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,16 +25,17 @@ class AuthApiClient {
     'offline_access',
     'api'
   ];
+
   // End default configs
 
   AuthApiClient(
       {this.authClient,
-        this.clientId: _clientId,
-        this.redirectUrl: _redirectUrl,
-        this.discoveryUrl,
-        this.authzEndpoint,
-        this.tokenEndpoint,
-        this.scopes: _scopes}) {
+      this.clientId: _clientId,
+      this.redirectUrl: _redirectUrl,
+      this.discoveryUrl,
+      this.authzEndpoint,
+      this.tokenEndpoint,
+      this.scopes: _scopes}) {
     if (authClient == null) {
       authClient = FlutterAppAuth();
     }
@@ -48,7 +50,15 @@ class AuthApiClient {
     var idToken = await sharedPreferenceService.idToken;
     var accessToken = await sharedPreferenceService.accessToken;
     var expiresIn = await sharedPreferenceService.expiresIn;
-    return Auth0Info(idToken: idToken, accessToken: accessToken, expiresIn: expiresIn);
+    return Auth0Info(
+        idToken: idToken, accessToken: accessToken, expiresIn: expiresIn);
+  }
+
+  Future<void> authLogout() async {
+    print('authLogout =======> ');
+
+    final callback = 'http://localhost:58711/';
+    await launchLogoutURL(callback);
   }
 
   Future<dynamic> getUserInfo(accessToken) async {
@@ -104,7 +114,7 @@ class AuthApiClient {
             clientId,
             redirectUrl,
             serviceConfiguration:
-            AuthorizationServiceConfiguration(authzEndpoint, tokenEndpoint),
+                AuthorizationServiceConfiguration(authzEndpoint, tokenEndpoint),
             scopes: this.scopes,
           ),
         );

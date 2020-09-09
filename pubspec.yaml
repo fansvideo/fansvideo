@@ -43,6 +43,7 @@ dependencies:
   freezed_annotation:
   inview_notifier_list: ^1.0.0
   font_awesome_flutter: ^8.8.1
+  get: ^3.8.0
 
 dev_dependencies:
   flutter_test:
